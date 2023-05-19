@@ -22,3 +22,9 @@
   padding-top: 40px;
   overflow: hidden;
 }
+
+.ingridients {
+  height: 680px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

@@ -1,6 +1,6 @@
 import headerStyle from './app-header.module.css';
 import { Component } from "react";
-import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Logo, ProfileIcon, BurgerIcon, ListIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components'
 
 class AppHeader extends Component {
   render() {
@@ -10,15 +10,15 @@ class AppHeader extends Component {
           <nav className={headerStyle.header__menu}>
             <div className={headerStyle.header__box}> 
               <BurgerIcon type="primary" />
-              <p className="text text_type_main-small">
+              <a className="text text_type_main-default">
                 Конструктор
-              </p>
+              </a>
             </div>
             <div className={headerStyle.header__box}>
               <ListIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">
+              <a className="text text_type_main-default text_color_inactive">
                 Лента заказов
-              </p>
+              </a>
             </div>
           </nav>
           <Logo/>

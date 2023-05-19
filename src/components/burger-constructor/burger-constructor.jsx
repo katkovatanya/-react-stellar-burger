@@ -1,6 +1,9 @@
 import constructorStyle from './burger-constructor.module.css';
 import { Component } from "react";
-import { ConstructorElement, DragIcon,  CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from 'prop-types';
+
 
 class Ingredient extends Component {
   render() {
@@ -28,7 +31,7 @@ class BurgerConstructor extends Component {
     const main = this.props.data.filter(item => item.type === 'main').slice(1, 5);
     return (
       <section className={constructorStyle.section}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'scroll', overflowX: 'hidden', paddingRight: '8px' }} className='custom-scroll'>
+        <div className={constructorStyle.box + ' custom-scroll'}>
           <div className={constructorStyle.ingredient}>
             <ConstructorElement
               type="top"
@@ -69,6 +72,10 @@ class BurgerConstructor extends Component {
       </section >
     )
   }
+}
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType)
 }
 
 export default BurgerConstructor;

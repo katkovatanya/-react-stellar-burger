@@ -1,6 +1,8 @@
 import ingridientsStyle from './burger-ingredients.module.css';
 import { Counter, Tab, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Component } from "react";
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from 'prop-types';
 
 class BurgerIngredient extends Component {
   render() {
@@ -49,7 +51,7 @@ class BurgerIngredients extends Component {
               Начинки
             </Tab>
           </div>
-          <div style={{ overflow: 'scroll', height: '680px', overflowX: 'hidden' }} className='custom-scroll'>
+          <div className={ingridientsStyle.ingridients + " custom-scroll"}>
             <h2 className="text text_type_main-medium">Булки</h2>
             <div className={ingridientsStyle.container}>
               {bun.map(item => <BurgerIngredient {...item} />)}
@@ -66,6 +68,13 @@ class BurgerIngredients extends Component {
         </section>
       </>)
   }
+}
+
+BurgerIngredient.propTypes = {
+  item: ingredientPropType
+}
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType)
 }
 
 export default BurgerIngredients;
