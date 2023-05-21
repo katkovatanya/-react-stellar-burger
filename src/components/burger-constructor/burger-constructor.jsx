@@ -5,30 +5,24 @@ import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from 'prop-types';
 
 
-class Ingredient extends Component {
-  render() {
-    return (
-      <div className={constructorStyle.ingredient}>
-        <DragIcon type="primary" />
-        <ConstructorElement
-          text={this.props.name}
-          price={this.props.price}
-          thumbnail={this.props.image}
-        />
-      </div>
-    )
-  }
+function Ingredient(props) {
+  return (
+    <div className={constructorStyle.ingredient} key={props._id}>
+      <DragIcon type="primary" />
+      <ConstructorElement
+        text={props.name}
+        price={props.price}
+        thumbnail={props.image}
+      />
+    </div>
+  )
 }
 
-class BurgerConstructor extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const bun = this.props.data.find(item => item.type === 'bun');
-    const sauce = this.props.data.find(item => item.type === 'sauce');
-    const main = this.props.data.filter(item => item.type === 'main').slice(1, 5);
+function BurgerConstructor(props) {
+ {
+    const bun = props.data.find(item => item.type === 'bun');
+    const sauce = props.data.find(item => item.type === 'sauce');
+    const main = props.data.filter(item => item.type === 'main').slice(1, 5);
     return (
       <section className={constructorStyle.section}>
         <div className={constructorStyle.box + ' custom-scroll'}>
