@@ -25,10 +25,10 @@ function BurgerIngredients(props) {
     setCurrent(e)
   }
   {
-    const [...data] = props.data;
-    const bun = data.filter(item => item.type === 'bun');
-    const main = data.filter(item => item.type === 'main');
-    const sauce = data.filter(item => item.type === 'sauce');
+    console.log(props.data);
+    const bun = props.data.filter(item => item.type === 'bun');
+    const main = props.data.filter(item => item.type === 'main');
+    const sauce = props.data.filter(item => item.type === 'sauce');
     return (
       <section className={ingridientsStyle.section}>
         <h1 className="text text_type_main-large">Соберите бургер</h1>
