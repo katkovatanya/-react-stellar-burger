@@ -25,7 +25,6 @@ function BurgerIngredients(props) {
     setCurrent(e)
   }
   {
-    console.log(props.data);
     const bun = props.data.filter(item => item.type === 'bun');
     const main = props.data.filter(item => item.type === 'main');
     const sauce = props.data.filter(item => item.type === 'sauce');
@@ -46,15 +45,15 @@ function BurgerIngredients(props) {
         <div className={ingridientsStyle.ingridients + " custom-scroll"}>
           <h2 className="text text_type_main-medium">Булки</h2>
           <div className={ingridientsStyle.container}>
-            {bun.map(item => <BurgerIngredient {...item} />)}
+            {bun.map(item => <BurgerIngredient key={item._id} {...item} />)}
           </div>
           <h2 className="text text_type_main-medium">Соусы</h2>
           <div className={ingridientsStyle.container}>
-            {sauce.map(item => <BurgerIngredient {...item} />)}
+            {sauce.map(item => <BurgerIngredient key={item._id} {...item} />)}
           </div>
           <h2 className="text text_type_main-medium">Начинки</h2>
           <div className={ingridientsStyle.container}>
-            {main.map(item => <BurgerIngredient {...item} />)}
+            {main.map(item => <BurgerIngredient key={item._id} {...item} />)}
           </div>
         </div>
       </section>
