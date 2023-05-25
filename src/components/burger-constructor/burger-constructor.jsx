@@ -1,5 +1,5 @@
 import constructorStyle from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from 'prop-types';
 
@@ -55,7 +55,7 @@ function BurgerConstructor(props) {
           <p className="text text_type_main-large">5535</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={props.setISOpen}>
+        <Button htmlType="button" type="primary" size="large" onClick={props.setIsOpen}>
           Оформить заказ
         </Button>
       </div>

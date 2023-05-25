@@ -6,6 +6,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useEffect, useState } from "react";
+import OrderDetails from "../order-details/order-details";
 
 const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -31,10 +32,9 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <BurgerIngredients data={data} />
-        <BurgerConstructor data={data} setISOpen={setModalActive} />
+        <BurgerConstructor data={data} setIsOpen={setModalActive} />
       </main>
-      <ModalOverlay isOpen={modalActive} />
-      <Modal isOpen={modalActive} setISOpen={setModalActive} />
+      <Modal isOpen={modalActive} setIsOpen={setModalActive} children={<OrderDetails/>}/>
     </div>
   )
 }

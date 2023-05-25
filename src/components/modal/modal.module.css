@@ -6,7 +6,7 @@
   z-index: 2;
   display: flex;
   width: 720px;
-  height: 718px;
+  height: max-content;
   background-color: #1C1C21;
   margin-left: -360px;
   position: fixed;
@@ -16,25 +16,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.modal__subtitle {
-  margin-top: 32px;
-}
-
-.modal__done {
-  width: 120px;
-  height: 120px;
-  margin-top: 60px;
-  background-image: url(../../images/done.png);
-}
-
-.modal__paragraph {
-  margin-top: 60px;
-}
-
-.modal__paragraph_inactive {
-  margin-top: 8px;
 }
 
 .modal__closeButton {
