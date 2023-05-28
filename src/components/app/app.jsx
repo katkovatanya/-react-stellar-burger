@@ -7,8 +7,8 @@ import Modal from "../modal/modal";
 import { useEffect, useState } from "react";
 import OrderDetails from "../order-details/order-details";
 import api from "../../utils/api";
+import { URL } from "../../utils/constants";
 
-const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
 

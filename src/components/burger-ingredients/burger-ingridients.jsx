@@ -6,6 +6,7 @@ import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { typeBun, typeSauce, typeMain } from '../../utils/constants';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('one');
@@ -37,13 +38,13 @@ function BurgerIngredients(props) {
   }
   {
     const bun = React.useMemo(() => {
-      return props.data.filter(item => item.type === 'bun');
+      return props.data.filter(item => item.type === typeBun);
     }, [props]);
     const main = React.useMemo(() => {
-      return props.data.filter(item => item.type === 'main');
+      return props.data.filter(item => item.type === typeMain);
     }, [props]);
     const sauce = React.useMemo(() => {
-      return props.data.filter(item => item.type === 'sauce');
+      return props.data.filter(item => item.type === typeSauce);
     }, [props]);
     return (
       <section className={ingridientsStyle.section}>

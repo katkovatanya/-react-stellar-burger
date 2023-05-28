@@ -3,6 +3,7 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktiku
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from 'prop-types';
 import React from 'react';
+import { typeBun, typeSauce, typeMain } from '../../utils/constants';
 
 function Ingredient(props) {
   return (
@@ -20,13 +21,13 @@ function Ingredient(props) {
 function BurgerConstructor(props) {
 
   const bun = React.useMemo(() => {
-    return props.data.find(item => item.type === 'bun')
+    return props.data.find(item => item.type === typeBun)
   }, [props]);
   const sauce = React.useMemo(() => {
-    return props.data.find(item => item.type === 'sauce')
+    return props.data.find(item => item.type === typeSauce)
   }, [props]);
   const main = React.useMemo(() => {
-    return props.data.filter(item => item.type === 'main').slice(1, 5)
+    return props.data.filter(item => item.type === typeMain).slice(1, 5)
   }, [props]);
 
 
