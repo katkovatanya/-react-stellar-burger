@@ -55,7 +55,7 @@ function BurgerConstructor(props) {
           <p className="text text_type_main-large">5535</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={props.setIsOpen}>
+        <Button htmlType="button" type="primary" size="large" onClick={() => props.setIsOpen(true)}>
           Оформить заказ
         </Button>
       </div>
@@ -64,7 +64,7 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType)
+  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 }
 
 export default BurgerConstructor;

@@ -1,7 +1,8 @@
 import overlayStyle from './modal-overlay.module.css';
 import { useEffect } from "react";
+import PropTypes from 'prop-types';
 
-const ModalOverlay = ({ isOpen, setIsOpen }) => {
+const ModalOverlay = (props) => {
 
 
   useEffect(() => {
@@ -10,17 +11,22 @@ const ModalOverlay = ({ isOpen, setIsOpen }) => {
     return () => {
       document.removeEventListener('keydown', handleEscape);
     }
-  }, [isOpen])
+  }, [])
 
   const handleEscape = (e) => {
     if (e.key === 'Escape') {
-      setIsOpen(false)
+      props.setIsOpen(false)
     }
   }
 
   return (
-    <div className={isOpen ? overlayStyle.overlay_active : overlayStyle.overlay} onClick={() => setIsOpen(false)}></div>
+    <div className={overlayStyle.overlay_active} onClick={() => props.setIsOpen(false)} />
   )
 }
+
+ModalOverlay.propTypes = {
+  setIsOpen: PropTypes.func.isRequired
+}
+
 
 export default ModalOverlay;

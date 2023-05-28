@@ -13,8 +13,8 @@ const Modal = (props) => {
   return ReactDOM.createPortal(
     (
       <>
-        <ModalOverlay isOpen={props.isOpen} setIsOpen={props.setIsOpen} />
-        <div className={props.isOpen ? (modalStyle.modal + " " + modalStyle.modal_open) : (modalStyle.modal)}>
+        <ModalOverlay setIsOpen={props.setIsOpen} />
+        <div className={modalStyle.modal_open}>
           <button type='button' className={modalStyle.modal__closeButton} onClick={() => props.setIsOpen(false)}>
             <CloseIcon type="primary" />
           </button>
@@ -27,9 +27,8 @@ const Modal = (props) => {
 }
 
 Modal.propTypes = {
-  children: PropTypes.element,
-  isOpen: PropTypes.bool,
-  setIsOpen: PropTypes.func
+  children: PropTypes.element.isRequired,
+  setIsOpen: PropTypes.func.isRequired
 }
 
 export default Modal;
