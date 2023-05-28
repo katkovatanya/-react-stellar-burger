@@ -2,6 +2,7 @@ import constructorStyle from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from 'prop-types';
+import React from 'react';
 
 function Ingredient(props) {
   return (
@@ -18,9 +19,15 @@ function Ingredient(props) {
 
 function BurgerConstructor(props) {
 
-  const bun = props.data.find(item => item.type === 'bun');
-  const sauce = props.data.find(item => item.type === 'sauce');
-  const main = props.data.filter(item => item.type === 'main').slice(1, 5);
+  const bun = React.useMemo(() => {
+    return props.data.find(item => item.type === 'bun')
+  }, [props]);
+  const sauce = React.useMemo(() => {
+    return props.data.find(item => item.type === 'sauce')
+  }, [props]);
+  const main = React.useMemo(() => {
+    return props.data.filter(item => item.type === 'main').slice(1, 5)
+  }, [props]);
 
 
 

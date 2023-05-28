@@ -36,9 +36,15 @@ function BurgerIngredients(props) {
     setCurrent(e)
   }
   {
-    const bun = props.data.filter(item => item.type === 'bun');
-    const main = props.data.filter(item => item.type === 'main');
-    const sauce = props.data.filter(item => item.type === 'sauce');
+    const bun = React.useMemo(() => {
+      return props.data.filter(item => item.type === 'bun');
+    }, [props]);
+    const main = React.useMemo(() => {
+      return props.data.filter(item => item.type === 'main');
+    }, [props]);
+    const sauce = React.useMemo(() => {
+      return props.data.filter(item => item.type === 'sauce');
+    }, [props]);
     return (
       <section className={ingridientsStyle.section}>
         <h1 className="text text_type_main-large">Соберите бургер</h1>
