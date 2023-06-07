@@ -1,0 +1,24 @@
+.overlay {
+  display: none;
+}
+
+.overlay_active {
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #E5E5E5
+}
+
+.overlay_active::after {
+  content: "";
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}

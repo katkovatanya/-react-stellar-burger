@@ -1,0 +1,23 @@
+.title {
+  margin-top: 120px;
+}
+
+.modal__subtitle {
+  margin-top: 32px;
+}
+
+.modal__paragraph {
+  margin-top: 60px;
+}
+
+.modal__done {
+  width: 120px;
+  height: 120px;
+  margin-top: 60px;
+  background-image: url(../../images/done.png);
+}
+
+.modal__paragraph_inactive {
+  margin-top: 8px;
+  margin-bottom: 120px;
+}

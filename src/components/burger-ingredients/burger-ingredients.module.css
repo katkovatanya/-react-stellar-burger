@@ -1,0 +1,31 @@
+.ingridient__img {
+  width: 240px;
+  height: 120px;
+}
+
+.ingridient {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 272px;
+  height: 208px;
+  cursor: pointer;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.section {
+  width: 600px;
+  padding-top: 40px;
+  overflow: hidden;
+}
+
+.ingridients {
+  height: 680px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

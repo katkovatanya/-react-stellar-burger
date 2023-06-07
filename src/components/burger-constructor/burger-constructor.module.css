@@ -1,0 +1,37 @@
+.section {
+  margin-top: 100px;
+  margin-left: 62px;
+  overflow: hidden;
+}
+
+.ingredient {
+  width: 568px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  column-gap: 13px;
+}
+
+.ordering {
+  composes: ingredient;
+  column-gap: 41px;
+  margin-top: 40px;
+}
+
+.sum {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  column-gap: 9px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-right: 8px;
+}

@@ -1,17 +1,35 @@
 import styles from "./app.module.css";
-import { data } from "../../utils/data";
+// import { data } from "../../utils/data";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingridients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import Modal from "../modal/modal";
+import { useEffect, useState } from "react";
+import OrderDetails from "../order-details/order-details";
+import api from "../../utils/api";
+import { URL } from "../../utils/constants";
+
 
 function App() {
+
+  const [data, setData] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
+
+  useEffect(() => {
+    api(URL)
+      .then(res => setData(res.data))
+  }, [])
+
   return (
     <div className={styles.app}>
-      <pre style={{
-      	margin: "auto",
-      	fontSize: "1.5rem"
-      }}>
-      	Измените src/components/app/app.jsx и сохраните для обновления.
-      </pre>
+      <AppHeader />
+      <main className={styles.main}>
+        <BurgerIngredients data={data} />
+        <BurgerConstructor data={data} setIsOpen={setModalActive} />
+      </main>
+      {modalActive && <Modal setIsOpen={setModalActive}><OrderDetails /></Modal>}
     </div>
-  );
+  )
 }
 
 export default App;
