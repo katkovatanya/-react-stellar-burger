@@ -1,7 +1,7 @@
 import ingredientDetails from './ingredient-details.module.css';
 import { Typography } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
+// import { ingredientPropType } from '../../utils/prop-types';
+// import PropTypes from 'prop-types';
 
 
 const IngredientDetails = (props) => {
@@ -34,8 +34,8 @@ const IngredientDetails = (props) => {
   )
 }
 
-IngredientDetails.propTypes = {
-  data: ingredientPropType.isRequired
-}
+// IngredientDetails.propTypes = {
+//   data: ingredientPropType.isRequired
+// }
 
 export default IngredientDetails;

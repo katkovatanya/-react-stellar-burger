@@ -1,4 +1,4 @@
-const checkResponse = (res) => {
+export const checkResponse = (res) => {
   if (res.ok) {
     return res.json()
   }
@@ -7,7 +7,7 @@ const checkResponse = (res) => {
 
 const api = (url) => {
   return fetch(url)
-  .then(res => checkResponse(res))
+    .then(res => checkResponse(res))
 }
 
 export default api;
