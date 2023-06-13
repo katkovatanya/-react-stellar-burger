@@ -7,33 +7,18 @@ import Modal from "../modal/modal";
 import { useContext, useEffect, useState, useReducer } from "react";
 import OrderDetails from "../order-details/order-details";
 import api from "../../utils/api";
-import { URL } from "../../utils/constants";
+import { urlIngredients } from "../../utils/constants";
 import { IngredientsContext, ConstructorContext, BunContext, TotalPriceContext, OrderContext } from "../../utils/context";
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "add":
-      return {
-        totalPrice: state.totalPrice + action.payload
-      };
-    case "delete":
-      return { totalPrice: state.totalPrice - action.payload };
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
 
 
 function App() {
   const [data, setData] = useState([]);
-  const [modalActive, setModalActive] = useState(false);
+  // const [modalActive, setModalActive] = useState(false);
   const [constructorBurger, setConstructorBurger] = useState([]);
   const [bunConstructor, setBunConstructor] = useState();
-  const [totalPrice, totalPriceDispatcher] = useReducer(reducer, { totalPrice: 0 });
-  const [order, setOrder] = useState();
 
   useEffect(() => {
-    api(URL)
+    api(urlIngredients)
       .then(res => {
         setData(res.data);
       })
@@ -45,15 +30,10 @@ function App() {
       <IngredientsContext.Provider value={{ data, setData }}>
         <ConstructorContext.Provider value={{ constructorBurger, setConstructorBurger }}>
           <BunContext.Provider value={{ bunConstructor, setBunConstructor }}>
-            <TotalPriceContext.Provider value={{ totalPrice, totalPriceDispatcher }}>
-              <OrderContext.Provider value={{ order, setOrder }}>
-              {data && <main className={styles.main}>
-                <BurgerIngredients />
-                <BurgerConstructor setIsOpen={setModalActive} />
-              </main>}
-              {modalActive && <Modal setIsOpen={setModalActive}><OrderDetails /></Modal>}
-              </OrderContext.Provider>
-            </TotalPriceContext.Provider>
+            {data && <main className={styles.main}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </main>}
           </BunContext.Provider>
         </ConstructorContext.Provider>
       </IngredientsContext.Provider>

@@ -3,9 +3,24 @@ import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktiku
 // import { ingredientPropType } from "../../utils/prop-types";
 // import PropTypes from 'prop-types';
 import React from 'react';
-import { typeBun, typeSauce, typeMain } from '../../utils/constants';
-import { ConstructorContext, IngredientsContext, BunContext, TotalPriceContext, OrderContext } from '../../utils/context';
+import { typeBun, urlOrder } from '../../utils/constants';
+import { ConstructorContext, IngredientsContext, BunContext } from '../../utils/context';
 import { checkResponse } from '../../utils/api';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case "add":
+//       return {
+//         totalPrice: state.totalPrice + action.payload
+//       };
+//     case "delete":
+//       return { totalPrice: state.totalPrice - action.payload };
+//     default:
+//       throw new Error(`Wrong type of action: ${action.type}`);
+//   }
+// }
 
 function Ingredient(props) {
   return (
@@ -26,17 +41,23 @@ function BurgerConstructor(props) {
   const { data } = React.useContext(IngredientsContext);
   const { constructorBurger, setConstructorBurger } = React.useContext(ConstructorContext);
   const { bunConstructor, setBunConstructor } = React.useContext(BunContext);
-  const { totalPrice, totalPriceDispatcher } = React.useContext(TotalPriceContext);
-  const { order, setOrder } = React.useContext(OrderContext);
+  const [order, setOrder] = React.useState();
+  const [orderModal, setOrderModal] = React.useState(false);
 
-  // let totalPrice = bunConstructor.price*2 + constructorBurger.reduce((sum, item) => { 
-  //   return sum + item.price;
-  // }, 0)
+
+  const totalPrice = React.useMemo(() => {
+    const burger = constructorBurger ? constructorBurger.reduce((sum, item) => {
+      return sum + item.price;
+    }, 0)
+      : 0;
+    const bun = bunConstructor ? bunConstructor.price * 2 : 0;
+    return burger + bun;
+  }, [bunConstructor, constructorBurger]);
 
   const handleClickOrder = () => {
     let burger = constructorBurger.map(item => item._id);
     burger.push(bunConstructor._id);
-    return fetch('https://norma.nomoreparties.space/api/orders', {
+    return fetch(urlOrder, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -48,7 +69,7 @@ function BurgerConstructor(props) {
       .then(res => checkResponse(res))
       .then(res => {
         setOrder(res.order);
-        props.setIsOpen(true)
+        setOrderModal(true)
       })
   }
 
@@ -75,7 +96,7 @@ function BurgerConstructor(props) {
         </div>
         <div className={constructorStyle.ordering}>
           <div className={constructorStyle.sum}>
-            <p className="text text_type_main-large">{totalPrice.totalPrice}</p>
+            <p className="text text_type_main-large">{totalPrice}</p>
             <CurrencyIcon type="primary" />
           </div>
           <Button htmlType="button" type="primary" size="large" onClick={() => handleClickOrder()}>
@@ -83,6 +104,7 @@ function BurgerConstructor(props) {
           </Button>
         </div>
       </section >
+      {orderModal && <Modal setIsOpen={setOrderModal}><OrderDetails order={order} /></Modal>}
     </IngredientsContext.Provider>
   )
 }

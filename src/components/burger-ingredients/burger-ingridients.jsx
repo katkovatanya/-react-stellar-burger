@@ -7,7 +7,7 @@ import { useState, useContext } from "react";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { typeBun, typeSauce, typeMain } from '../../utils/constants';
-import { IngredientsContext, ConstructorContext, BunContext, TotalPriceContext } from '../../utils/context';
+import { IngredientsContext, ConstructorContext, BunContext } from '../../utils/context';
 
 
 
@@ -19,7 +19,6 @@ function BurgerIngredients() {
   const { data } = useContext(IngredientsContext);
   const { constructorBurger, setConstructorBurger } = React.useContext(ConstructorContext);
   const { bunConstructor, setBunConstructor } = React.useContext(BunContext);
-  const { totalPrice, totalPriceDispatcher } = useContext(TotalPriceContext);
 
   const createIngredient = (card) => {
     const openModal = (item) => {
@@ -29,13 +28,10 @@ function BurgerIngredients() {
 
     const handleClickIngredient = (card) => {
       if (card.type == typeBun) {
-        bunConstructor!=='undefined' ?? totalPriceDispatcher({ type: 'delete', payload: bunConstructor.price });
         setBunConstructor(card);
-        totalPriceDispatcher({ type: 'add', payload: card.price });
       } else {
         setConstructorBurger([...constructorBurger, card]);
       }
-      totalPriceDispatcher({ type: 'add', payload: card.price })
     }
 
     return (

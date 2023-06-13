@@ -1,6 +1,7 @@
-const URL = 'https://norma.nomoreparties.space/api/ingredients';
+const urlIngredients = 'https://norma.nomoreparties.space/api/ingredients';
+const urlOrder = 'https://norma.nomoreparties.space/api/orders';
 const typeBun = 'bun';
 const typeSauce = 'sauce';
 const typeMain = 'main';
 
-export {URL, typeBun, typeSauce, typeMain};
+export {urlIngredients, typeBun, typeSauce, typeMain, urlOrder};
