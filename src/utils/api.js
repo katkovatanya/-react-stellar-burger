@@ -10,4 +10,16 @@ const api = (url) => {
     .then(res => checkResponse(res))
 }
 
-export default api;
+export const apiOrder = (urlOrder, burger) => {
+  return fetch(urlOrder, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ingredients: burger
+    })
+  })
+  .then(res => checkResponse(res))
+}
+export { api };

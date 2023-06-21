@@ -1,26 +1,10 @@
 import constructorStyle from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-// import { ingredientPropType } from "../../utils/prop-types";
-// import PropTypes from 'prop-types';
-import React from 'react';
-import { typeBun, urlOrder } from '../../utils/constants';
-import { ConstructorContext, IngredientsContext, BunContext } from '../../utils/context';
-import { checkResponse } from '../../utils/api';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case "add":
-//       return {
-//         totalPrice: state.totalPrice + action.payload
-//       };
-//     case "delete":
-//       return { totalPrice: state.totalPrice - action.payload };
-//     default:
-//       throw new Error(`Wrong type of action: ${action.type}`);
-//   }
-// }
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrder, OPEN_MODAL_ORDER, OPEN_MODAL, CLOSE_MODAL_ORDER, CANCEL_ORDER } from '../../services/actions';
 
 function Ingredient(props) {
   return (
@@ -38,65 +22,64 @@ function Ingredient(props) {
 
 function BurgerConstructor(props) {
 
-  const { data } = React.useContext(IngredientsContext);
-  const { constructorBurger, setConstructorBurger } = React.useContext(ConstructorContext);
-  const { bunConstructor, setBunConstructor } = React.useContext(BunContext);
-  const [order, setOrder] = React.useState();
+  const dispatch = useDispatch();
+
+  const data = useSelector(state => state.allIngredients);
+  const { items, bun } = useSelector(state => state.burgerConstructor.constructorIngrediens);
+  const order = useSelector(state => state.order.order)
+  const modalOrder = useSelector(state => state.modalOrder.modalOrder)
   const [orderModal, setOrderModal] = React.useState(false);
 
 
   const totalPrice = React.useMemo(() => {
-    const burger = constructorBurger ? constructorBurger.reduce((sum, item) => {
+    const itemPrice = items ? items.reduce((sum, item) => {
       return sum + item.price;
     }, 0)
       : 0;
-    const bun = bunConstructor ? bunConstructor.price * 2 : 0;
-    return burger + bun;
-  }, [bunConstructor, constructorBurger]);
+    const bunPrice = bun ? bun.price * 2 : 0;
+    return itemPrice + bunPrice;
+  }, [items, bun]);
 
   const handleClickOrder = () => {
-    let burger = constructorBurger.map(item => item._id);
-    burger.push(bunConstructor._id);
-    return fetch(urlOrder, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ingredients: burger
-      })
-    })
-      .then(res => checkResponse(res))
-      .then(res => {
-        setOrder(res.order);
-        setOrderModal(true)
-      })
+    let burger = items.map(item => item._id);
+    burger.push(bun._id);
+    dispatch(getOrder(burger));
+    setTimeout(() => {
+      dispatch({ type: OPEN_MODAL_ORDER });
+      setOrderModal(true);
+    }, 0);
+  }
+
+  const closeModal = () => {
+    setOrderModal(false);
+    dispatch({ type: CLOSE_MODAL_ORDER });
+    dispatch({type: CANCEL_ORDER})
   }
 
   return (
-    <IngredientsContext.Provider value={data}>
+    <>
       <section className={constructorStyle.section}>
         <div className={constructorStyle.box + ' custom-scroll'}>
           <div className={constructorStyle.ingredient}>
-            {bunConstructor && <ConstructorElement type="top" isLocked={true}
-              text={bunConstructor.name + "(верх)"}
-              price={bunConstructor.price}
-              thumbnail={bunConstructor.image}
+            {bun.name && <ConstructorElement type="top" isLocked={true}
+              text={bun.name + "(верх)"}
+              price={bun.price}
+              thumbnail={bun.image}
             />}
           </div>
-          {constructorBurger.map((item, index) => <Ingredient key={index} {...item} />)
+          {items.map((item, index) => <Ingredient key={index} {...item} />)
           }
           <div className={constructorStyle.ingredient}>
-            {bunConstructor && <ConstructorElement type="bottom" isLocked={true}
-              text={bunConstructor.name + "(низ)"}
-              price={bunConstructor.price}
-              thumbnail={bunConstructor.image}
+            {bun.name && <ConstructorElement type="bottom" isLocked={true}
+              text={bun.name + "(низ)"}
+              price={bun.price}
+              thumbnail={bun.image}
             />}
           </div>
         </div>
         <div className={constructorStyle.ordering}>
           <div className={constructorStyle.sum}>
-            <p className="text text_type_main-large">{totalPrice}</p>
+            <p className="text text_type_main-large">{totalPrice ? totalPrice : '0'}</p>
             <CurrencyIcon type="primary" />
           </div>
           <Button htmlType="button" type="primary" size="large" onClick={() => handleClickOrder()}>
@@ -104,13 +87,10 @@ function BurgerConstructor(props) {
           </Button>
         </div>
       </section >
-      {orderModal && <Modal setIsOpen={setOrderModal}><OrderDetails order={order} /></Modal>}
-    </IngredientsContext.Provider>
+      {orderModal && modalOrder && <Modal closeModal={closeModal}><OrderDetails /></Modal>}
+    </>
   )
 }
 
-// BurgerConstructor.propTypes = {
-//   data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
-// }
 
 export default BurgerConstructor;

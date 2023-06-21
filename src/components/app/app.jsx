@@ -3,40 +3,51 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingridients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import Modal from "../modal/modal";
-import { useContext, useEffect, useState, useReducer } from "react";
-import OrderDetails from "../order-details/order-details";
+import { useContext, useEffect, useState, useReducer, useMemo } from "react";
 import api from "../../utils/api";
-import { urlIngredients } from "../../utils/constants";
-import { IngredientsContext, ConstructorContext, BunContext, TotalPriceContext, OrderContext } from "../../utils/context";
+import { useDispatch, useSelector } from 'react-redux';
+import { GET_INGREDIENTS_REQUEST, getIngredients } from "../../services/actions";
 
 
 function App() {
-  const [data, setData] = useState([]);
-  // const [modalActive, setModalActive] = useState(false);
-  const [constructorBurger, setConstructorBurger] = useState([]);
-  const [bunConstructor, setBunConstructor] = useState();
 
-  useEffect(() => {
-    api(urlIngredients)
-      .then(res => {
-        setData(res.data);
-      })
-  }, [])
+  const dispatch = useDispatch();
+
+  const data = useSelector(store => store.allItems.allIngredients);
+  const ingredientsRequest = useSelector(store => store.allItems.ingredientsRequest);
+
+  useEffect(
+    () => {
+      dispatch(getIngredients());
+    },
+    [dispatch]
+  );
+
+  const content = useMemo(
+    () => {
+      return ingredientsRequest ? (
+        <p>Waiting...</p>
+      ) : (
+        <BurgerIngredients />
+      );
+    },
+    [ingredientsRequest, data]
+  );
+
+  // useEffect(() => {
+  //   api(urlIngredients)
+  //     .then(res => {
+  //       setData(res.data);
+  //     })
+  // }, [])
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <IngredientsContext.Provider value={{ data, setData }}>
-        <ConstructorContext.Provider value={{ constructorBurger, setConstructorBurger }}>
-          <BunContext.Provider value={{ bunConstructor, setBunConstructor }}>
-            {data && <main className={styles.main}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>}
-          </BunContext.Provider>
-        </ConstructorContext.Provider>
-      </IngredientsContext.Provider>
+      {data && <main className={styles.main}>
+        {content}
+        <BurgerConstructor />
+      </main>}
     </div >
   )
 }

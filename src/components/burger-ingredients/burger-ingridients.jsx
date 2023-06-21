@@ -1,36 +1,81 @@
 import ingridientsStyle from './burger-ingredients.module.css';
 import { Counter, Tab, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from "react";
-import { useState, useContext } from "react";
-// import { ingredientPropType } from "../../utils/prop-types";
-// import PropTypes from 'prop-types';
+import { useState, useMemo, useEffect } from "react";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { typeBun, typeSauce, typeMain } from '../../utils/constants';
 import { IngredientsContext, ConstructorContext, BunContext } from '../../utils/context';
+import { useDispatch, useSelector } from 'react-redux';
+import { GET_CURRENT_INGREDIENT, OPEN_MODAL_INGREDIENT, OPEN_MODAL, ADD_BUN, ADD_ITEMS, CLOSE_MODAL_INGREDIENT, DEL_CURRENT_INGREDIENT } from '../../services/actions';
+import { useInView } from 'react-intersection-observer';
 
+
+const Component =() => {
+  const {ref, inView, entry } = useInView({
+    threshold: 1,
+  })
+}
 
 
 function BurgerIngredients() {
-  const [current, setCurrent] = React.useState('one');
-  const [modal, setModal] = useState(false);
-  const [cardModal, setCardModal] = useState({})
 
-  const { data } = useContext(IngredientsContext);
-  const { constructorBurger, setConstructorBurger } = React.useContext(ConstructorContext);
-  const { bunConstructor, setBunConstructor } = React.useContext(BunContext);
+  const Tabs = useMemo(() => {
+    return {
+      BUN: 'bun',
+      SAUCE: 'sauce',
+      MAIN: 'main'
+    }
+  }, []);
+
+  const [current, setCurrent] = React.useState(Tabs.BUN);
+  const dispatch = useDispatch();
+
+  const data = useSelector(state => state.allItems.allIngredients);
+  const [modal, setModal] = useState(false);
+  const modalIngredient = useSelector(state => state.modalIngredient.modalIngredient)
+  const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
+
+
+  const { ref: refBun, inView: inViewBun } = useInView({
+    threshold: 0
+  });
+  const { ref: refSauce, inView: inViewSauce } = useInView({
+    threshold: 0
+  });
+  const { ref: refMain, inView: inViewMain} = useInView({
+    threshold: 0
+  });
+
+  useEffect(() => {
+    if (inViewBun) {
+      setCurrent(Tabs.BUN);
+    } else if (inViewSauce) {
+      setCurrent(Tabs.SAUCE);
+    } else if (inViewMain) {
+      setCurrent(Tabs.MAIN);
+    }
+  }, [inViewBun, inViewSauce, inViewMain])
+
+  const closeModal = () => {
+    dispatch({type: CLOSE_MODAL_INGREDIENT});
+    dispatch({type: DEL_CURRENT_INGREDIENT});
+    setModal(false);
+  }
 
   const createIngredient = (card) => {
     const openModal = (item) => {
-      setCardModal(item);
+      dispatch({ type: GET_CURRENT_INGREDIENT, ingredient: item });
+      dispatch({ type: OPEN_MODAL_INGREDIENT });
       setModal(true);
     }
 
+
     const handleClickIngredient = (card) => {
       if (card.type == typeBun) {
-        setBunConstructor(card);
+        dispatch({ type: ADD_BUN, bun: card })
       } else {
-        setConstructorBurger([...constructorBurger, card]);
+        dispatch({ type: ADD_ITEMS, item: card })
       }
     }
 
@@ -51,6 +96,7 @@ function BurgerIngredients() {
   const handleClickTab = (e) => {
     setCurrent(e)
   }
+
   {
     const bun = React.useMemo(() => {
       return data.filter(item => item.type === typeBun);
@@ -62,44 +108,38 @@ function BurgerIngredients() {
       return data.filter(item => item.type === typeSauce);
     }, [data]);
     return (
-      <IngredientsContext.Provider value={data}>
-        <section className={ingridientsStyle.section}>
-          <h1 className="text text_type_main-large">Соберите бургер</h1>
-          <div style={{ display: 'flex' }}>
-            <Tab value="one" active={current === 'one'} onClick={handleClickTab}>
-              Булки
-            </Tab>
-            <Tab value="two" active={current === 'two'} onClick={handleClickTab}>
-              Соусы
-            </Tab>
-            <Tab value="three" active={current === 'three'} onClick={handleClickTab}>
-              Начинки
-            </Tab>
+      <section className={ingridientsStyle.section}>
+        <h1 className="text text_type_main-large">Соберите бургер</h1>
+        <div style={{ display: 'flex' }}>
+          <Tab value={Tabs.BUN} active={current === Tabs.BUN} onClick={handleClickTab}>
+            Булки
+          </Tab>
+          <Tab value={Tabs.SAUCE} active={current === Tabs.SAUCE} onClick={handleClickTab}>
+            Соусы
+          </Tab>
+          <Tab value={Tabs.MAIN} active={current === Tabs.MAIN} onClick={handleClickTab}>
+            Начинки
+          </Tab>
+        </div>
+        <div className={ingridientsStyle.ingridients + " custom-scroll"}>
+          <h2 ref={refBun} className="text text_type_main-medium">Булки</h2>
+          <div className={ingridientsStyle.container}>
+            {bun.map(item => createIngredient(item))}
           </div>
-          <div className={ingridientsStyle.ingridients + " custom-scroll"}>
-            <h2 className="text text_type_main-medium">Булки</h2>
-            <div className={ingridientsStyle.container}>
-              {bun.map(item => createIngredient(item))}
-            </div>
-            <h2 className="text text_type_main-medium">Соусы</h2>
-            <div className={ingridientsStyle.container}>
-              {sauce.map(item => createIngredient(item))}
-            </div>
-            <h2 className="text text_type_main-medium">Начинки</h2>
-            <div className={ingridientsStyle.container}>
-              {main.map(item => createIngredient(item))}
-            </div>
+          <h2 ref={refSauce} className="text text_type_main-medium">Соусы</h2>
+          <div className={ingridientsStyle.container}>
+            {sauce.map(item => createIngredient(item))}
           </div>
-          {modal && <Modal setIsOpen={setModal}><IngredientDetails {...cardModal} /></Modal>}
-        </section>
-      </IngredientsContext.Provider>
+          <h2 ref={refMain} className="text text_type_main-medium">Начинки</h2>
+          <div className={ingridientsStyle.container}>
+            {main.map(item => createIngredient(item))}
+          </div>
+        </div>
+        {modal && modalIngredient && <Modal closeModal={closeModal}><IngredientDetails/></Modal>}
+      </section>
     )
   }
 }
 
-
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
-// }
 
 export default BurgerIngredients;
