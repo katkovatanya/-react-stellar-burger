@@ -32,7 +32,6 @@ function BurgerConstructor(props) {
 
 
   const totalPrice = React.useMemo(() => {
-    console.log(items);
     const itemPrice = items ? items.reduce((sum, item) => {
       return sum + item.price;
     }, 0)

@@ -31,7 +31,6 @@ export const BurgerIngredient = ({ card, setModal }) => {
     dispatch({ type: GET_CURRENT_INGREDIENT, ingredient: item });
     dispatch({ type: OPEN_MODAL_INGREDIENT });
     setModal(true);
-    console.log(item);
   }
 
 
