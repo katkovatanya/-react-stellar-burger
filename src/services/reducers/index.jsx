@@ -15,7 +15,8 @@ import {
   OPEN_MODAL_ORDER,
   CLOSE_MODAL_ORDER,
   ADD_ITEMS,
-  ADD_BUN
+  ADD_BUN,
+  DEL_ITEMS
 } from '../actions/index'
 import { combineReducers } from "redux"
 
@@ -26,10 +27,8 @@ const initialIngredients = {
 }
 
 const initialConstructor = {
-  constructorIngrediens: {
-    items: [],
-    bun: {}
-  }
+  items: [],
+  bun: {}
 }
 
 const initialCurrentIngredient = {
@@ -166,7 +165,7 @@ export const orderReducer = (state = initialOrder, action) => {
       return {
         ...state,
         orderRequest: true,
-        order: {number: 'wait...'}
+        order: { number: 'wait...' }
       };
     }
     case GET_ORDER_SUCCESS: {
@@ -178,10 +177,12 @@ export const orderReducer = (state = initialOrder, action) => {
       };
     }
     case GET_ORDER_FAILED: {
+      console.log('ошибка')
       return {
         ...state,
         orderRequest: false,
-        orderFailed: true
+        orderFailed: true,
+        order: { number: action.order }
       };
     }
     default: {
@@ -195,13 +196,22 @@ export const burgerConstructorReducer = (state = initialConstructor, action) => 
     case ADD_BUN: {
       return {
         ...state,
-        constructorIngrediens: { ...state.constructorIngrediens, bun: action.bun }
+        bun: action.bun
       }
     }
     case ADD_ITEMS: {
+      console.log(state.constructorIngrediens)
       return {
         ...state,
-        constructorIngrediens: { ...state.constructorIngrediens, items: [...state.constructorIngrediens.items, action.item] }
+        items: [...state.items, action.item]
+      }
+    }
+    case DEL_ITEMS: {
+      return {
+        ...state,
+        items: state.items.filter(item => {
+          return item.constructorId !== action.id
+        })
       }
     }
     case GET_INGREDIENTS_CONSTRUCTOR: {

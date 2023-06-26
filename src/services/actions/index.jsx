@@ -34,6 +34,8 @@ export const CLOSE_MODAL_INGREDIENT = 'CLOSE_INGREDIENT';
 export const ADD_BUN = 'ADD_BUN';
 export const ADD_ITEMS = 'ADD_ITEMS';
 
+export const DEL_ITEMS = 'ADD_ITEMS';
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
@@ -61,7 +63,6 @@ export function getOrder(burger) {
     });
     apiOrder(urlOrder, burger)
     .then(res => {
-      console.log(res);
       if (res && res.success) {
         dispatch({
           type: GET_ORDER_SUCCESS,
@@ -69,7 +70,8 @@ export function getOrder(burger) {
         });
       } else {
         dispatch({
-          type: GET_ORDER_FAILED
+          type: GET_ORDER_FAILED,
+          order: res
         });
       }
     });

@@ -20,6 +20,11 @@ export const apiOrder = (urlOrder, burger) => {
       ingredients: burger
     })
   })
-  .then(res => checkResponse(res))
+  .then(res => {
+    if (res.ok) {
+      return res.json()
+    }
+    return ('ошибка :(');
+  })
 }
 export { api };

@@ -28,6 +28,7 @@
 }
 
 .box {
+  min-height: 100px;
   max-height: 600px;
   display: flex;
   flex-direction: column;

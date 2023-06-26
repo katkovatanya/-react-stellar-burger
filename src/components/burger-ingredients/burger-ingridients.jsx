@@ -1,5 +1,6 @@
 import ingridientsStyle from './burger-ingredients.module.css';
 import { Counter, Tab, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerIngredient } from '../burger-ingredient/burger-ingredient';
 import React from "react";
 import { useState, useMemo, useEffect } from "react";
 import Modal from '../modal/modal';
@@ -7,16 +8,10 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { typeBun, typeSauce, typeMain } from '../../utils/constants';
 import { IngredientsContext, ConstructorContext, BunContext } from '../../utils/context';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_CURRENT_INGREDIENT, OPEN_MODAL_INGREDIENT, OPEN_MODAL, ADD_BUN, ADD_ITEMS, CLOSE_MODAL_INGREDIENT, DEL_CURRENT_INGREDIENT } from '../../services/actions';
+import { ADD_KEY, CLOSE_MODAL_INGREDIENT, DEL_CURRENT_INGREDIENT } from '../../services/actions';
 import { useInView } from 'react-intersection-observer';
-
-
-const Component =() => {
-  const {ref, inView, entry } = useInView({
-    threshold: 1,
-  })
-}
-
+import { DndProvider, useDrag } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function BurgerIngredients() {
 
@@ -43,7 +38,7 @@ function BurgerIngredients() {
   const { ref: refSauce, inView: inViewSauce } = useInView({
     threshold: 0
   });
-  const { ref: refMain, inView: inViewMain} = useInView({
+  const { ref: refMain, inView: inViewMain } = useInView({
     threshold: 0
   });
 
@@ -58,39 +53,11 @@ function BurgerIngredients() {
   }, [inViewBun, inViewSauce, inViewMain])
 
   const closeModal = () => {
-    dispatch({type: CLOSE_MODAL_INGREDIENT});
-    dispatch({type: DEL_CURRENT_INGREDIENT});
+    dispatch({ type: CLOSE_MODAL_INGREDIENT });
+    dispatch({ type: DEL_CURRENT_INGREDIENT });
     setModal(false);
   }
 
-  const createIngredient = (card) => {
-    const openModal = (item) => {
-      dispatch({ type: GET_CURRENT_INGREDIENT, ingredient: item });
-      dispatch({ type: OPEN_MODAL_INGREDIENT });
-      setModal(true);
-    }
-
-
-    const handleClickIngredient = (card) => {
-      if (card.type == typeBun) {
-        dispatch({ type: ADD_BUN, bun: card })
-      } else {
-        dispatch({ type: ADD_ITEMS, item: card })
-      }
-    }
-
-    return (
-      <div className={ingridientsStyle.ingridient} key={card._id} onClick={() => handleClickIngredient(card)}>
-        <Counter count={1} size="default" extraClass="m-1" key={card._id} />
-        <img className={ingridientsStyle.ingridient__img} src={card.image} alt={card.name} />
-        <div>
-          <span className="text text_type_digits-default">{card.price + " "}</span>
-          <CurrencyIcon type="primary" />
-        </div>
-        <p className="text text_type_main-default">{card.name}</p>
-      </div>
-    )
-  }
 
 
   const handleClickTab = (e) => {
@@ -122,20 +89,22 @@ function BurgerIngredients() {
           </Tab>
         </div>
         <div className={ingridientsStyle.ingridients + " custom-scroll"}>
-          <h2 ref={refBun} className="text text_type_main-medium">Булки</h2>
-          <div className={ingridientsStyle.container}>
-            {bun.map(item => createIngredient(item))}
-          </div>
-          <h2 ref={refSauce} className="text text_type_main-medium">Соусы</h2>
-          <div className={ingridientsStyle.container}>
-            {sauce.map(item => createIngredient(item))}
-          </div>
-          <h2 ref={refMain} className="text text_type_main-medium">Начинки</h2>
-          <div className={ingridientsStyle.container}>
-            {main.map(item => createIngredient(item))}
-          </div>
+          <DndProvider backend={HTML5Backend}>
+            <h2 ref={refBun} className="text text_type_main-medium">Булки</h2>
+            <div className={ingridientsStyle.container}>
+              {bun.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+            </div>
+            <h2 ref={refSauce} className="text text_type_main-medium">Соусы</h2>
+            <div className={ingridientsStyle.container}>
+            {sauce.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+            </div>
+            <h2 ref={refMain} className="text text_type_main-medium">Начинки</h2>
+            <div className={ingridientsStyle.container}>
+            {main.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+            </div>
+          </DndProvider>
         </div>
-        {modal && modalIngredient && <Modal closeModal={closeModal}><IngredientDetails/></Modal>}
+        {modal && modalIngredient && <Modal closeModal={closeModal}><IngredientDetails /></Modal>}
       </section>
     )
   }

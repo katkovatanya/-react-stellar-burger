@@ -4,15 +4,25 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrder, OPEN_MODAL_ORDER, OPEN_MODAL, CLOSE_MODAL_ORDER, CANCEL_ORDER } from '../../services/actions';
+import { getOrder, OPEN_MODAL_ORDER, OPEN_MODAL, CLOSE_MODAL_ORDER, CANCEL_ORDER, DEL_ITEMS } from '../../services/actions';
+import { useDrop } from 'react-dnd';
 
 function Ingredient(props) {
+
+  const dispatch = useDispatch();
+
+  const handleClose = (e) => {
+    e.preventDefault();
+    dispatch({type: DEL_ITEMS, id: props.constructorId})
+  }
+
   return (
-    <div className={constructorStyle.ingredient} key={props._id}>
+    <div className={constructorStyle.ingredient} key={props.constructorId}>
       <DragIcon type="primary" />
       <ConstructorElement text={props.name}
         price={props.price}
         thumbnail={props.image}
+        handleClose={(e) => handleClose(e)}
       />
     </div>
   )
@@ -22,16 +32,25 @@ function Ingredient(props) {
 
 function BurgerConstructor(props) {
 
+  const {onDropHandler} = props;
+
+  const [, dropRef] = useDrop({
+    accept: 'ingredients',
+    drop(item) {
+      console.log(item);
+      onDropHandler(item.card)
+    }
+  });
+
   const dispatch = useDispatch();
 
-  const data = useSelector(state => state.allIngredients);
-  const { items, bun } = useSelector(state => state.burgerConstructor.constructorIngrediens);
-  const order = useSelector(state => state.order.order)
+  const { items, bun } = useSelector(state => state.burgerConstructor);
   const modalOrder = useSelector(state => state.modalOrder.modalOrder)
   const [orderModal, setOrderModal] = React.useState(false);
 
 
   const totalPrice = React.useMemo(() => {
+    console.log(items);
     const itemPrice = items ? items.reduce((sum, item) => {
       return sum + item.price;
     }, 0)
@@ -53,13 +72,13 @@ function BurgerConstructor(props) {
   const closeModal = () => {
     setOrderModal(false);
     dispatch({ type: CLOSE_MODAL_ORDER });
-    dispatch({type: CANCEL_ORDER})
+    dispatch({ type: CANCEL_ORDER })
   }
 
   return (
     <>
       <section className={constructorStyle.section}>
-        <div className={constructorStyle.box + ' custom-scroll'}>
+        <div ref={dropRef} className={constructorStyle.box + ' custom-scroll'}>
           <div className={constructorStyle.ingredient}>
             {bun.name && <ConstructorElement type="top" isLocked={true}
               text={bun.name + "(верх)"}
@@ -67,7 +86,7 @@ function BurgerConstructor(props) {
               thumbnail={bun.image}
             />}
           </div>
-          {items.map((item, index) => <Ingredient key={index} {...item} />)
+          {items.map((item, index) => <Ingredient key={item.constructorId} {...item} />)
           }
           <div className={constructorStyle.ingredient}>
             {bun.name && <ConstructorElement type="bottom" isLocked={true}
@@ -82,9 +101,12 @@ function BurgerConstructor(props) {
             <p className="text text_type_main-large">{totalPrice ? totalPrice : '0'}</p>
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large" onClick={() => handleClickOrder()}>
+          {bun._id? (<Button htmlType="button" type="primary" size="large" onClick={() => handleClickOrder()}>
             Оформить заказ
-          </Button>
+          </Button>)
+          : (<Button htmlType="button" type="primary" size="large" disabled={true}>
+          Оформить заказ
+        </Button>)}
         </div>
       </section >
       {orderModal && modalOrder && <Modal closeModal={closeModal}><OrderDetails /></Modal>}
