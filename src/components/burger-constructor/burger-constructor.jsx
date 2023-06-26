@@ -4,35 +4,18 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrder, OPEN_MODAL_ORDER, OPEN_MODAL, CLOSE_MODAL_ORDER, CANCEL_ORDER, DEL_ITEMS } from '../../services/actions';
+import { getOrder, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CANCEL_ORDER} from '../../services/actions';
 import { useDrop } from 'react-dnd';
+import { Ingredient } from '../ingredient/ingredient';
 
-function Ingredient(props) {
 
-  const dispatch = useDispatch();
 
-  const handleClose = (e) => {
-    e.preventDefault();
-    dispatch({type: DEL_ITEMS, id: props.constructorId})
-  }
-
-  return (
-    <div className={constructorStyle.ingredient} key={props.constructorId}>
-      <DragIcon type="primary" />
-      <ConstructorElement text={props.name}
-        price={props.price}
-        thumbnail={props.image}
-        handleClose={(e) => handleClose(e)}
-      />
-    </div>
-  )
-}
 
 
 
 function BurgerConstructor(props) {
 
-  const {onDropHandler} = props;
+  const { onDropHandler } = props;
 
   const [, dropRef] = useDrop({
     accept: 'ingredients',
@@ -85,7 +68,7 @@ function BurgerConstructor(props) {
               thumbnail={bun.image}
             />}
           </div>
-          {items.map((item) => <Ingredient key={item.constructorId} {...item} />)
+          {items.map((item, index) => <Ingredient key={item.constructorId} ingredient={item} index={index} />)
           }
           <div className={constructorStyle.ingredient}>
             {bun.name && <ConstructorElement type="bottom" isLocked={true}
@@ -100,18 +83,19 @@ function BurgerConstructor(props) {
             <p className="text text_type_main-large">{totalPrice ? totalPrice : '0'}</p>
             <CurrencyIcon type="primary" />
           </div>
-          {bun._id? (<Button htmlType="button" type="primary" size="large" onClick={() => handleClickOrder()}>
+          {bun._id ? (<Button htmlType="button" type="primary" size="large" onClick={() => handleClickOrder()}>
             Оформить заказ
           </Button>)
-          : (<Button htmlType="button" type="primary" size="large" disabled={true}>
-          Оформить заказ
-        </Button>)}
+            : (<Button htmlType="button" type="primary" size="large" disabled={true}>
+              Оформить заказ
+            </Button>)}
         </div>
       </section >
       {orderModal && modalOrder && <Modal closeModal={closeModal}><OrderDetails /></Modal>}
     </>
   )
 }
+
 
 
 export default BurgerConstructor;

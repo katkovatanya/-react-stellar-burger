@@ -5,9 +5,6 @@ export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
-//Получение списка ингредиентов для конструктора бургера. Используется в компоненте BurgerConstructor.
-export const GET_INGREDIENTS_CONSTRUCTOR = 'GET_INGREDIENTS_CONSTRUCTOR';
-
 //Добавление данных о просматриваемом в модальном окне IngredientDetails ингредиенте.
 export const GET_CURRENT_INGREDIENT = 'GET_CURRENT_INGREDIENT';
 
@@ -34,7 +31,8 @@ export const CLOSE_MODAL_INGREDIENT = 'CLOSE_INGREDIENT';
 export const ADD_BUN = 'ADD_BUN';
 export const ADD_ITEMS = 'ADD_ITEMS';
 
-export const DEL_ITEMS = 'ADD_ITEMS';
+export const DEL_ITEMS = 'DEL_ITEMS';
+export const SORT_ITEMS = 'SORT_ITEMS';
 
 export function getIngredients() {
   return function (dispatch) {

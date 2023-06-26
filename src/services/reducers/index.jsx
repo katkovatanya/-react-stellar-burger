@@ -2,7 +2,6 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-  GET_INGREDIENTS_CONSTRUCTOR,
   GET_CURRENT_INGREDIENT,
   DEL_CURRENT_INGREDIENT,
   GET_ORDER_REQUEST,
@@ -16,7 +15,8 @@ import {
   CLOSE_MODAL_ORDER,
   ADD_ITEMS,
   ADD_BUN,
-  DEL_ITEMS
+  DEL_ITEMS,
+  SORT_ITEMS
 } from '../actions/index'
 import { combineReducers } from "redux"
 
@@ -213,10 +213,15 @@ export const burgerConstructorReducer = (state = initialConstructor, action) => 
         })
       }
     }
-    case GET_INGREDIENTS_CONSTRUCTOR: {
+    case SORT_ITEMS: {
+      const dragItem = state.items[action.dragIndex];
+      const newItems = [...state.items];
+      newItems.splice(action.dragIndex, 1);
+      newItems.splice(action.hoverIndex, 0, dragItem);
       return {
-        ...state
-      };
+        ...state,
+        items: newItems
+      }
     }
     default: {
       return state;
