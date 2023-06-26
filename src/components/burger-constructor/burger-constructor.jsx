@@ -37,7 +37,6 @@ function BurgerConstructor(props) {
   const [, dropRef] = useDrop({
     accept: 'ingredients',
     drop(item) {
-      console.log(item);
       onDropHandler(item.card)
     }
   });
@@ -86,7 +85,7 @@ function BurgerConstructor(props) {
               thumbnail={bun.image}
             />}
           </div>
-          {items.map((item, index) => <Ingredient key={item.constructorId} {...item} />)
+          {items.map((item) => <Ingredient key={item.constructorId} {...item} />)
           }
           <div className={constructorStyle.ingredient}>
             {bun.name && <ConstructorElement type="bottom" isLocked={true}
