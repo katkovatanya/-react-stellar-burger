@@ -3,10 +3,29 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
+import { compose, createStore, applyMiddleware, getState } from 'redux';
+import { rootReducer } from "./services/reducers";
+import thunk from "redux-thunk";
+import { Provider } from 'react-redux';
+
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+
+// увидель в консоли состояние стейта, подписка на изменение стора
+// store.subscribe(() => {
+//   console.log(store.getState());
+// })
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

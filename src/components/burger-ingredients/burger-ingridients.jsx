@@ -1,88 +1,114 @@
 import ingridientsStyle from './burger-ingredients.module.css';
 import { Counter, Tab, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerIngredient } from '../burger-ingredient/burger-ingredient';
 import React from "react";
-import { useState } from "react";
-import { ingredientPropType } from "../../utils/prop-types";
-import PropTypes from 'prop-types';
+import { useState, useMemo, useEffect } from "react";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { typeBun, typeSauce, typeMain } from '../../utils/constants';
+import { IngredientsContext, ConstructorContext, BunContext } from '../../utils/context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_KEY, CLOSE_MODAL_INGREDIENT, DEL_CURRENT_INGREDIENT } from '../../services/actions';
+import { useInView } from 'react-intersection-observer';
+import { DndProvider, useDrag } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-function BurgerIngredients(props) {
-  const [current, setCurrent] = React.useState('one');
-  const [modal, setModal] = useState(false);
-  const [cardModal, setCardModal] = useState({})
+function BurgerIngredients() {
 
-  const createIngredient = (card) => {
-    const openModal = (item) => {
-      setCardModal(item);
-      setModal(true);
+  const Tabs = useMemo(() => {
+    return {
+      BUN: 'bun',
+      SAUCE: 'sauce',
+      MAIN: 'main'
     }
+  }, []);
 
-    return (
-      <div className={ingridientsStyle.ingridient} key={card._id} onClick={() => openModal(card)}>
-        <Counter count={1} size="default" extraClass="m-1" key={card._id} />
-        <img className={ingridientsStyle.ingridient__img} src={card.image} alt={card.name} />
-        <div>
-          <span className="text text_type_digits-default">{card.price + " "}</span>
-          <CurrencyIcon type="primary" />
-        </div>
-        <p className="text text_type_main-default">{card.name}</p>
-      </div>
-    )
+  const [current, setCurrent] = React.useState(Tabs.BUN);
+  const dispatch = useDispatch();
+
+  const data = useSelector(state => state.allItems.allIngredients);
+  const [modal, setModal] = useState(false);
+  const modalIngredient = useSelector(state => state.modalIngredient.modalIngredient)
+  const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
+
+
+  const { ref: refBun, inView: inViewBun } = useInView({
+    threshold: 0
+  });
+  const { ref: refSauce, inView: inViewSauce } = useInView({
+    threshold: 0
+  });
+  const { ref: refMain, inView: inViewMain } = useInView({
+    threshold: 0
+  });
+
+  useEffect(() => {
+    if (inViewBun) {
+      setCurrent(Tabs.BUN);
+    } else if (inViewSauce) {
+      setCurrent(Tabs.SAUCE);
+    } else if (inViewMain) {
+      setCurrent(Tabs.MAIN);
+    }
+  }, [inViewBun, inViewSauce, inViewMain])
+
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL_INGREDIENT });
+    dispatch({ type: DEL_CURRENT_INGREDIENT });
+    setModal(false);
   }
+
 
 
   const handleClickTab = (e) => {
     setCurrent(e)
   }
+
   {
     const bun = React.useMemo(() => {
-      return props.data.filter(item => item.type === typeBun);
-    }, [props]);
+      return data.filter(item => item.type === typeBun);
+    }, [data]);
     const main = React.useMemo(() => {
-      return props.data.filter(item => item.type === typeMain);
-    }, [props]);
+      return data.filter(item => item.type === typeMain);
+    }, [data]);
     const sauce = React.useMemo(() => {
-      return props.data.filter(item => item.type === typeSauce);
-    }, [props]);
+      return data.filter(item => item.type === typeSauce);
+    }, [data]);
     return (
       <section className={ingridientsStyle.section}>
         <h1 className="text text_type_main-large">Соберите бургер</h1>
         <div style={{ display: 'flex' }}>
-          <Tab value="one" active={current === 'one'} onClick={handleClickTab}>
+          <Tab value={Tabs.BUN} active={current === Tabs.BUN} onClick={handleClickTab}>
             Булки
           </Tab>
-          <Tab value="two" active={current === 'two'} onClick={handleClickTab}>
+          <Tab value={Tabs.SAUCE} active={current === Tabs.SAUCE} onClick={handleClickTab}>
             Соусы
           </Tab>
-          <Tab value="three" active={current === 'three'} onClick={handleClickTab}>
+          <Tab value={Tabs.MAIN} active={current === Tabs.MAIN} onClick={handleClickTab}>
             Начинки
           </Tab>
         </div>
         <div className={ingridientsStyle.ingridients + " custom-scroll"}>
-          <h2 className="text text_type_main-medium">Булки</h2>
-          <div className={ingridientsStyle.container}>
-            {bun.map(item => createIngredient(item))}
-          </div>
-          <h2 className="text text_type_main-medium">Соусы</h2>
-          <div className={ingridientsStyle.container}>
-            {sauce.map(item => createIngredient(item))}
-          </div>
-          <h2 className="text text_type_main-medium">Начинки</h2>
-          <div className={ingridientsStyle.container}>
-            {main.map(item => createIngredient(item))}
-          </div>
+          <DndProvider backend={HTML5Backend}>
+            <h2 ref={refBun} className="text text_type_main-medium">Булки</h2>
+            <div className={ingridientsStyle.container}>
+              {bun.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+            </div>
+            <h2 ref={refSauce} className="text text_type_main-medium">Соусы</h2>
+            <div className={ingridientsStyle.container}>
+            {sauce.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+            </div>
+            <h2 ref={refMain} className="text text_type_main-medium">Начинки</h2>
+            <div className={ingridientsStyle.container}>
+            {main.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+            </div>
+          </DndProvider>
         </div>
-        {modal && <Modal setIsOpen={setModal}><IngredientDetails {...cardModal} /></Modal>}
+        {modal && modalIngredient && <Modal closeModal={closeModal}><IngredientDetails /></Modal>}
       </section>
     )
   }
 }
 
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
-}
 
 export default BurgerIngredients;

@@ -8,17 +8,17 @@ import PropTypes from 'prop-types';
 const modalRoot = document.getElementById("react-modals");
 
 
-const Modal = (props) => {
+const Modal = ({closeModal, children}) => {
 
   return ReactDOM.createPortal(
     (
       <>
-        <ModalOverlay setIsOpen={props.setIsOpen} />
+        <ModalOverlay closeModal={closeModal} />
         <div className={modalStyle.modal_open}>
-          <button type='button' className={modalStyle.modal__closeButton} onClick={() => props.setIsOpen(false)}>
+          <button type='button' className={modalStyle.modal__closeButton} onClick={() => closeModal()}>
             <CloseIcon type="primary" />
           </button>
-          {props.children}
+          {children}
         </div>
       </>
     ),
@@ -28,7 +28,7 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  setIsOpen: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired
 }
 
 export default Modal;
