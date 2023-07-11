@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route-element";
 import { Layout } from "../layout/layout";
 import { fetchWithRefresh } from "../../utils/api";
-import { getIngredients } from "../../services/actions";
+import { LOGIN, getIngredients } from "../../services/actions";
 
 
 
@@ -41,11 +41,15 @@ function App() {
   };
 
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      fetchWithRefresh('GET')
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) {
+  //     fetchWithRefresh('GET')
+  //       .then(res => {
+  //         console.log(res);
+  //         dispatch({ type: LOGIN, payload: res.user, password: '' })
+  //       })
+  //   }
+  // }, []);
 
   return (
     <>
