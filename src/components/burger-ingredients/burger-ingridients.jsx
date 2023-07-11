@@ -13,7 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import { DndProvider, useDrag } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-function BurgerIngredients() {
+function BurgerIngredients({ modal, setModal }) {
 
   const Tabs = useMemo(() => {
     return {
@@ -27,7 +27,6 @@ function BurgerIngredients() {
   const dispatch = useDispatch();
 
   const data = useSelector(state => state.allItems.allIngredients);
-  const [modal, setModal] = useState(false);
   const modalIngredient = useSelector(state => state.modalIngredient.modalIngredient)
   const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
 
@@ -96,11 +95,11 @@ function BurgerIngredients() {
             </div>
             <h2 ref={refSauce} className="text text_type_main-medium">Соусы</h2>
             <div className={ingridientsStyle.container}>
-            {sauce.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+              {sauce.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
             </div>
             <h2 ref={refMain} className="text text_type_main-medium">Начинки</h2>
             <div className={ingridientsStyle.container}>
-            {main.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
+              {main.map(item => <BurgerIngredient card={item} setModal={setModal} key={item._id} />)}
             </div>
           </DndProvider>
         </div>

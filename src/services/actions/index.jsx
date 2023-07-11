@@ -1,4 +1,4 @@
-import { api, apiOrder } from "../../utils/api";
+import { api, apiOrder, getUser } from "../../utils/api";
 import { urlIngredients, urlOrder } from "../../utils/constants";
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -34,6 +34,11 @@ export const ADD_ITEMS = 'ADD_ITEMS';
 export const DEL_ITEMS = 'DEL_ITEMS';
 export const SORT_ITEMS = 'SORT_ITEMS';
 
+export const REGISTRATION_NEW_USER = 'REGISTRATION_NEW_USER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const CHANGE_USER_INFO = 'CHANGE_USER_INFO'
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
@@ -60,18 +65,18 @@ export function getOrder(burger) {
       type: GET_ORDER_REQUEST
     });
     apiOrder(urlOrder, burger)
-    .then(res => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_ORDER_SUCCESS,
-          order: res.order
-        });
-      } else {
-        dispatch({
-          type: GET_ORDER_FAILED,
-          order: res
-        });
-      }
-    });
+      .then(res => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_ORDER_SUCCESS,
+            order: res.order
+          });
+        } else {
+          dispatch({
+            type: GET_ORDER_FAILED,
+            order: res
+          });
+        }
+      });
   };
 }

@@ -1,62 +1,82 @@
-import styles from "./app.module.css";
-// import { data } from "../../utils/data";
+import { Home } from "../../pages/home/home";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { NotFoundPage } from "../../pages/not-found/not-found";
+import { RegistrationPage } from "../../pages/registration/registration";
+import { LoginPage } from "../../pages/login/login";
+import { ForgotPasswordFirstPage } from "../../pages/forgot-password-1/forgot-password-1";
+import { ResetPasswordPage } from "../../pages/forgot-password-2/forgot-password-2";
+import { ProfilePage } from "../../pages/profile/profile";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingridients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch, useSelector } from "react-redux";
+import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route-element";
+import { Layout } from "../layout/layout";
+import { fetchWithRefresh } from "../../utils/api";
 import { getIngredients } from "../../services/actions";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { typeBun } from "../../utils/constants";
-import { ADD_BUN, ADD_ITEMS } from "../../services/actions";
-import { v4 as uuidv4 } from 'uuid';
+
 
 
 function App() {
 
+  const [modal, setModal] = useState(false);
+  // const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
+
   const dispatch = useDispatch();
-
-  const data = useSelector(store => store.allItems.allIngredients);
-  const ingredientsRequest = useSelector(store => store.allItems.ingredientsRequest);
-
-  const onDropHandler = (item) => {
-    const key = uuidv4();
-    if (item.type == typeBun) {
-      dispatch({ type: ADD_BUN, bun: {...item, constructorId: key} })
-    } else {
-      dispatch({ type: ADD_ITEMS, item: {...item, constructorId: key} })
-    }
-  }
+  const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   useEffect(
     () => {
       dispatch(getIngredients());
     },
-    [dispatch]
+    []
   );
 
-  const content = useMemo(
-    () => {
-      return ingredientsRequest ? (
-        <p>Waiting...</p>
-      ) : (
-        <BurgerIngredients />
-      );
-    },
-    [ingredientsRequest, data]
-  );
+  const handleModalClose = () => {
+    navigate(-1);
+    setModal(false);
+  };
+
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      fetchWithRefresh('GET')
+    }
+  }, []);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className={styles.app}>
-        <AppHeader />
-        {data && <main className={styles.main}>
-          {content}
-          <BurgerConstructor onDropHandler={onDropHandler} />
-        </main>}
-      </div >
-    </DndProvider>
+    <>
+      <AppHeader />
+      <Routes>
+        <Route path="/" element={<OnlyAuth component={<Home modal={modal} setModal={setModal} />} />} />
+        <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
+        <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
+        <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordFirstPage />} />} />
+        <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
+        </Route>
+        <Route path='/ingredients/:id'
+          element={<IngredientDetails />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal closeModal={handleModalClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
+
+    </>
   )
 }
 

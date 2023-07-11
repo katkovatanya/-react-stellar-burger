@@ -1,0 +1,33 @@
+/* .sidebar {
+  display: flex;
+  flex-direction: column;
+  row-gap: 45px;
+}
+
+.sidebar__link {
+  text-decoration: none;
+}
+
+.sidebar__link_active {
+  text-decoration: none;
+  color: #fff;
+} */
+
+/* .main {
+  display: grid;
+  grid-template-columns: 320px 480px;
+  column-gap: 160px;
+  width: 1280px;
+  margin: 100px auto 0;
+} */
+
+.form {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  width: 480px;
+}
+
+/* .description {
+  margin: 35px 0 0;
+} */
