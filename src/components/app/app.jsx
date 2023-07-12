@@ -15,6 +15,7 @@ import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route
 import { Layout } from "../layout/layout";
 import { fetchWithRefresh } from "../../utils/api";
 import { CHECK_TOKEN, GET_USER, LOGIN, getIngredients } from "../../services/actions";
+import { OrderPage } from "../../pages/orders/orders";
 
 
 
@@ -61,6 +62,7 @@ function App() {
         <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
         <Route path="/" element={<Layout />}>
           <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
+          <Route path="/profile/orders" element={<OnlyAuth component={<OrderPage />} />} />
         </Route>
         <Route path='/ingredients/:id'
           element={<IngredientDetails />} />
