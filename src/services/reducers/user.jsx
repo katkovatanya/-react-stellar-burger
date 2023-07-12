@@ -2,11 +2,14 @@ import {
   LOGIN,
   REGISTRATION_NEW_USER,
   LOGOUT,
-  CHANGE_USER_INFO
+  CHANGE_USER_INFO,
+  CHECK_TOKEN,
+  GET_USER
 } from "../actions";
 
 const initialState = {
- isAuthenticated: false,
+  isAuthChecked: false,
+  isAuthenticated: false,
   user: null,
   password: ''
 }
@@ -41,6 +44,19 @@ export const userReducer = (state = initialState, action) => {
         user: action.payload.user,
         password: action.password
       };
+    }
+    case CHECK_TOKEN: {
+      return {
+        ...state,
+        isAuthChecked: true
+      }
+    }
+    case GET_USER: {
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true
+      }
     }
     default: {
       return state;

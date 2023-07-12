@@ -7,6 +7,17 @@ const ProtectedRouteElement = ({ onlyUnAuth = false, component }) => {
   const location = useLocation();
   const token = localStorage.getItem('refreshToken')
 
+  // isAuthChecked это флаг, показывающий что проверка токена произведена
+  // при этом результат этой проверки не имеет значения, важно только,
+  // что сам факт проверки имел место.
+  const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
+
+  // if (!isAuthChecked) {
+  //   // Запрос еще выполняется
+  //   // Выводим прелоадер в ПР
+  //   // Здесь возвращается просто null для экономии времени
+  //   return null;
+  // }
 
   if (onlyUnAuth && user) {
 
@@ -14,7 +25,7 @@ const ProtectedRouteElement = ({ onlyUnAuth = false, component }) => {
     return <Navigate to={from} />;
   }
 
-  if (!onlyUnAuth && !token && !user) {
+  if (!onlyUnAuth && !user) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 

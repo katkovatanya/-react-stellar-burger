@@ -37,7 +37,9 @@ export const SORT_ITEMS = 'SORT_ITEMS';
 export const REGISTRATION_NEW_USER = 'REGISTRATION_NEW_USER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-export const CHANGE_USER_INFO = 'CHANGE_USER_INFO'
+export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
+export const CHECK_TOKEN = 'CHECK_TOKEN';
+export const GET_USER = 'GET_USER';
 
 export function getIngredients() {
   return function (dispatch) {

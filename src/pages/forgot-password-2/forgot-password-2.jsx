@@ -5,9 +5,14 @@ import style from './forgot-password-2.module.css'
 import AppHeader from '../../components/app-header/app-header';
 import { sentNewPassword } from '../../utils/api';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { CHECK_TOKEN, GET_USER} from '../../services/actions';
+import { fetchWithRefresh
+ } from '../../utils/api';
 
 export const ResetPasswordPage = () => {
 
+  const dispatch = useDispatch();
   const user = useSelector(store => store.user);
 
   const [password, setPassword] = React.useState('')
@@ -18,6 +23,18 @@ export const ResetPasswordPage = () => {
 
   const navigate = useNavigate()
   const location = localStorage.getItem('path')
+
+  
+  // useEffect(() => {
+  //   dispatch({ type: CHECK_TOKEN });
+  //   if (user.isAuthenticated && localStorage.getItem("accessToken")) {
+  //     fetchWithRefresh('GET')
+  //       .then(res => {
+  //         console.log(res);
+  //         dispatch({ type: GET_USER, payload: res.user })
+  //       })
+  //   }
+  // }, [user]);
 
 
   useEffect(() => {
