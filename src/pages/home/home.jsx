@@ -1,10 +1,8 @@
 import styles from "../../components/app/app.module.css";
-import AppHeader from "../../components/app-header/app-header";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingridients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { typeBun } from "../../utils/constants";
@@ -28,13 +26,6 @@ export function Home({ modal, setModal }) {
       dispatch({ type: ADD_ITEMS, item: { ...item, constructorId: key } })
     }
   }
-
-  // useEffect(
-  //   () => {
-  //     dispatch(getIngredients());
-  //   },
-  //   []
-  // );
 
   const content = useMemo(
     () => {

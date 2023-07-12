@@ -37,7 +37,7 @@ function App() {
         fetchWithRefresh('GET')
           .then(res => {
             console.log(res);
-            dispatch({ type: GET_USER, payload: res.user })
+            dispatch({ type: GET_USER, payload: res })
           })
       }
     },
@@ -50,22 +50,11 @@ function App() {
   };
 
 
-  // useEffect(() => {
-  //   dispatch({ type: CHECK_TOKEN });
-  //   if (user.isAuthenticated && localStorage.getItem("accessToken")) {
-  //     fetchWithRefresh('GET')
-  //       .then(res => {
-  //         console.log(res);
-  //         dispatch({ type: GET_USER, payload: res.user })
-  //       })
-  //   }
-  // }, []);
-
   return (
     <>
       <AppHeader />
       <Routes>
-        <Route path="/" element={<OnlyAuth component={<Home modal={modal} setModal={setModal} />} />} />
+        <Route path="" element={<Home modal={modal} setModal={setModal} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
         <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordFirstPage />} />} />

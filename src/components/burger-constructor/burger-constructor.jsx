@@ -4,9 +4,10 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrder, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CANCEL_ORDER} from '../../services/actions';
+import { getOrder, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CANCEL_ORDER } from '../../services/actions';
 import { useDrop } from 'react-dnd';
 import { Ingredient } from '../ingredient/ingredient';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,6 +15,8 @@ import { Ingredient } from '../ingredient/ingredient';
 
 
 function BurgerConstructor(props) {
+  const user = useSelector((store) => store.user.user);
+  const navigate = useNavigate();
 
   const { onDropHandler } = props;
 
@@ -41,13 +44,18 @@ function BurgerConstructor(props) {
   }, [items, bun]);
 
   const handleClickOrder = () => {
-    let burger = items.map(item => item._id);
-    burger.push(bun._id);
-    dispatch(getOrder(burger));
-    setTimeout(() => {
-      dispatch({ type: OPEN_MODAL_ORDER });
-      setOrderModal(true);
-    }, 0);
+    if (user) {
+      let burger = items.map(item => item._id);
+      burger.push(bun._id);
+      dispatch(getOrder(burger));
+      setTimeout(() => {
+        dispatch({ type: OPEN_MODAL_ORDER });
+        setOrderModal(true);
+      }, 0);
+    }
+    else {
+      navigate('/login')
+    }
   }
 
   const closeModal = () => {

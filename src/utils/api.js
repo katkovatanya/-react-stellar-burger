@@ -10,6 +10,8 @@ const api = (url) => {
     .then(res => checkResponse(res))
 }
 
+
+
 export const apiOrder = (urlOrder, burger) => {
   return fetch(urlOrder, {
     method: 'POST',
@@ -20,12 +22,7 @@ export const apiOrder = (urlOrder, burger) => {
       ingredients: burger
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return ('ошибка :(');
-    })
+    .then(res => checkResponse(res))
 }
 
 
