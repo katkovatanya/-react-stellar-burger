@@ -7,13 +7,10 @@ import { createNewUser } from '../../utils/api';
 export const RegistrationPage = () => {
 
   const [name, setName] = React.useState('')
-  const nameRef = React.useRef(null)
 
   const [email, setEmail] = React.useState('')
-  const emailRef = React.useRef(null)
 
   const [password, setPassword] = React.useState('')
-  const passwordRef = React.useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +30,6 @@ export const RegistrationPage = () => {
           name={'name'}
           value={name}
           error={false}
-          ref={nameRef}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -44,7 +40,6 @@ export const RegistrationPage = () => {
           name={'email'}
           value={email}
           error={false}
-          ref={emailRef}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -56,7 +51,6 @@ export const RegistrationPage = () => {
           name={'password'}
           value={password}
           error={false}
-          ref={passwordRef}
           errorText={'Ошибка'}
           size={'default'}
         />

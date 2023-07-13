@@ -4,8 +4,7 @@ import style from './profile.module.css'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { CHANGE_USER_INFO } from '../../services/actions';
-import { fetchWithRefresh } from '../../utils/api';
-import { PATH } from '../../utils/constants';
+import { editUser } from '../../utils/api';
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ export const ProfilePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchWithRefresh('PATCH', `${PATH}/auth/user`, { name: newName, email: newEmail, password: newPassword })
+    editUser(newName, newEmail, newPassword)
       .then(res => {
         dispatch({ type: CHANGE_USER_INFO, payload: res, password: newPassword })
       })

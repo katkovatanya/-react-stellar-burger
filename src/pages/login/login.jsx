@@ -10,10 +10,8 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
 
   const [email, setEmail] = React.useState('')
-  const emailRef = React.useRef(null)
 
   const [password, setPassword] = React.useState('')
-  const passwordRef = React.useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +37,6 @@ export const LoginPage = () => {
           name={'email'}
           value={email}
           error={false}
-          ref={emailRef}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -51,7 +48,6 @@ export const LoginPage = () => {
           name={'password'}
           value={password}
           error={false}
-          ref={passwordRef}
           errorText={'Ошибка'}
           size={'default'}
         />

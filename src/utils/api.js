@@ -1,4 +1,4 @@
-import { PATH } from "./constants";
+import { PATH, urlOrder } from "./constants";
 
 export const checkResponse = (res) => {
   if (res.ok) {
@@ -81,6 +81,19 @@ export const logOut = (token) => {
   })
     .then(res => checkResponse(res))
 }
+
+export const getUser = () => {
+  return fetchWithRefresh('GET', `${PATH}/auth/user`)
+}
+
+export const editUser = (newName, newEmail, newPassword) => {
+  return fetchWithRefresh('PATCH', `${PATH}/auth/user`, { name: newName, email: newEmail, password: newPassword })
+}
+
+export const postOrder = (burger) => {
+  return fetchWithRefresh('POST', urlOrder, { ingredients: burger })
+}
+
 
 export const refreshToken = () => {
   return fetch(`${PATH}/auth/token`, {

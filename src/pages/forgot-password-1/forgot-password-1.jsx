@@ -7,7 +7,6 @@ import { resetPassword } from '../../utils/api';
 export const ForgotPasswordFirstPage = () => {
 
   const [email, setEmail] = React.useState('');
-  const emailRef = React.useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +35,6 @@ export const ForgotPasswordFirstPage = () => {
           name={'email'}
           value={email}
           error={false}
-          ref={emailRef}
           errorText={'Ошибка'}
           size={'default'}
         />

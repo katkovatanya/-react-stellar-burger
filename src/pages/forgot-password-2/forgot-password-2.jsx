@@ -10,10 +10,8 @@ export const ResetPasswordPage = () => {
   const user = useSelector(store => store.user);
 
   const [password, setPassword] = React.useState('')
-  const passwordRef = React.useRef(null)
 
   const [key, setKey] = React.useState('')
-  const keyRef = React.useRef(null)
 
   const navigate = useNavigate()
   const location = localStorage.getItem('path')
@@ -48,7 +46,6 @@ export const ResetPasswordPage = () => {
           name={'password'}
           value={password}
           error={false}
-          ref={passwordRef}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -59,7 +56,6 @@ export const ResetPasswordPage = () => {
           name={'key'}
           value={key}
           error={false}
-          ref={keyRef}
           errorText={'Ошибка'}
           size={'default'}
         />
