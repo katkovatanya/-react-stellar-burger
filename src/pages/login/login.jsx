@@ -2,14 +2,11 @@ import React from 'react';
 import { Input, ShowIcon, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import style from './login.module.css'
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { LOGIN } from '../../services/actions';
 import { logIn } from '../../utils/api';
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const [email, setEmail] = React.useState('')
@@ -47,7 +44,7 @@ export const LoginPage = () => {
           size={'default'}
         />
         <Input
-          type={'text'}
+          type={'password'}
           placeholder={'Пароль'}
           onChange={e => setPassword(e.target.value)}
           icon={'ShowIcon'}

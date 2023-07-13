@@ -14,16 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route-element";
 import { Layout } from "../layout/layout";
 import { fetchWithRefresh } from "../../utils/api";
-import { CHECK_TOKEN, GET_USER, LOGIN, getIngredients } from "../../services/actions";
+import { CHECK_TOKEN, GET_USER, getIngredients } from "../../services/actions";
 import { OrderPage } from "../../pages/orders/orders";
+import { PATH } from "../../utils/constants";
 
 
 
 function App() {
 
-  const user = useSelector((store) => store.user);
   const [modal, setModal] = useState(false);
-  // const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,9 +34,8 @@ function App() {
       dispatch(getIngredients());
       dispatch({ type: CHECK_TOKEN });
       if (localStorage.getItem("accessToken")) {
-        fetchWithRefresh('GET')
+        fetchWithRefresh('GET', `${PATH}/auth/user`)
           .then(res => {
-            console.log(res);
             dispatch({ type: GET_USER, payload: res })
           })
       }

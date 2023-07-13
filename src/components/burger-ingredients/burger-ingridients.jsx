@@ -1,16 +1,15 @@
 import ingridientsStyle from './burger-ingredients.module.css';
-import { Counter, Tab, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIngredient } from '../burger-ingredient/burger-ingredient';
 import React from "react";
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { typeBun, typeSauce, typeMain } from '../../utils/constants';
-import { IngredientsContext, ConstructorContext, BunContext } from '../../utils/context';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_KEY, CLOSE_MODAL_INGREDIENT, DEL_CURRENT_INGREDIENT } from '../../services/actions';
+import { CLOSE_MODAL_INGREDIENT, DEL_CURRENT_INGREDIENT } from '../../services/actions';
 import { useInView } from 'react-intersection-observer';
-import { DndProvider, useDrag } from "react-dnd";
+import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 function BurgerIngredients({ modal, setModal }) {
@@ -28,7 +27,6 @@ function BurgerIngredients({ modal, setModal }) {
 
   const data = useSelector(state => state.allItems.allIngredients);
   const modalIngredient = useSelector(state => state.modalIngredient.modalIngredient)
-  const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
 
 
   const { ref: refBun, inView: inViewBun } = useInView({

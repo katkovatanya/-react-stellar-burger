@@ -1,5 +1,5 @@
 import constructorStyle from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import React from 'react';
@@ -47,11 +47,10 @@ function BurgerConstructor(props) {
     if (user) {
       let burger = items.map(item => item._id);
       burger.push(bun._id);
-      dispatch(getOrder(burger));
-      setTimeout(() => {
-        dispatch({ type: OPEN_MODAL_ORDER });
-        setOrderModal(true);
-      }, 0);
+      dispatch(getOrder(burger))
+      //так как ожидание модального окна получилось слишком длительным, я убрала асинхронную конструкцию. Пока идёт ответ сервера, пользователь видит надпись "wait"
+      dispatch({ type: OPEN_MODAL_ORDER });
+      setOrderModal(true);
     }
     else {
       navigate('/login')

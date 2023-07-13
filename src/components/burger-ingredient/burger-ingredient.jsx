@@ -2,7 +2,7 @@ import ingridientStyle from './burger-ingredient.module.css';
 import { Counter, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_CURRENT_INGREDIENT, OPEN_MODAL_INGREDIENT, ADD_KEY } from '../../services/actions';
+import { GET_CURRENT_INGREDIENT, OPEN_MODAL_INGREDIENT } from '../../services/actions';
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
 

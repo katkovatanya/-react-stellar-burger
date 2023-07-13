@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, ShowIcon, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import style from './forgot-password-1.module.css'
 import { resetPassword } from '../../utils/api';
@@ -18,7 +18,6 @@ export const ForgotPasswordFirstPage = () => {
     e.preventDefault();
     resetPassword(email)
       .then(res => {
-        console.log(res);
         navigate("/reset-password")
       })
   }

@@ -1,15 +1,12 @@
 import ingredientDetails from './ingredient-details.module.css';
 import { Typography } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 
 const IngredientDetails = () => {
 
-  // const currentIngredient = useSelector(state => state.currentIngredient.currentIngredient)
-
   const data = useSelector(state => state.allItems.allIngredients);
-  console.log(data)
   const { id } = useParams();
 
   const currentIngredient = data.find(item => item._id === id);

@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Input, ShowIcon, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './profile.module.css'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { CHANGE_USER_INFO } from '../../services/actions';
 import { fetchWithRefresh } from '../../utils/api';
+import { PATH } from '../../utils/constants';
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export const ProfilePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchWithRefresh('PATCH', { name: newName, email: newEmail, password: newPassword })
+    fetchWithRefresh('PATCH', `${PATH}/auth/user`, { name: newName, email: newEmail, password: newPassword })
       .then(res => {
         dispatch({ type: CHANGE_USER_INFO, payload: res, password: newPassword })
       })
@@ -59,7 +60,7 @@ export const ProfilePage = () => {
           size={'default'}
         />
         <Input
-          type={'text'}
+          type={'password'}
           placeholder={'Пароль'}
           onChange={e => { setChange(true); setNewPassword(e.target.value) }}
           icon={'EditIcon'}

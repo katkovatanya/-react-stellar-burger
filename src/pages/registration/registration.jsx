@@ -1,13 +1,10 @@
 import React from 'react';
-import { Input, ShowIcon, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import style from './registration.module.css'
 import { createNewUser } from '../../utils/api';
-import { useDispatch } from "react-redux";
-import { REGISTRATION_NEW_USER } from '../../services/actions';
 
 export const RegistrationPage = () => {
-  const dispatch = useDispatch();
 
   const [name, setName] = React.useState('')
   const nameRef = React.useRef(null)
@@ -52,7 +49,7 @@ export const RegistrationPage = () => {
           size={'default'}
         />
         <Input
-          type={'text'}
+          type={'password'}
           placeholder={'Пароль'}
           onChange={e => setPassword(e.target.value)}
           icon={'ShowIcon'}

@@ -1,4 +1,4 @@
-import { api, apiOrder, getUser } from "../../utils/api";
+import { api, apiOrder, fetchWithRefresh } from "../../utils/api";
 import { urlIngredients, urlOrder } from "../../utils/constants";
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -66,7 +66,7 @@ export function getOrder(burger) {
     dispatch({
       type: GET_ORDER_REQUEST
     });
-    apiOrder(urlOrder, burger)
+    return fetchWithRefresh('POST', urlOrder, { ingredients: burger })
       .then(res => {
         if (res && res.success) {
           dispatch({
@@ -79,6 +79,6 @@ export function getOrder(burger) {
             order: res
           });
         }
-      });
+      })
   };
 }
