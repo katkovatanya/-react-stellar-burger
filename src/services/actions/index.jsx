@@ -1,4 +1,4 @@
-import { api, apiOrder, fetchWithRefresh, postOrder } from "../../utils/api";
+import { api, postOrder } from "../../utils/api";
 import { PATH } from "../../utils/constants";
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
