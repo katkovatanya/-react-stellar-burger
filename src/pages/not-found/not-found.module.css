@@ -1,0 +1,10 @@
+.title {
+font-size: 60px;
+}
+
+.box {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

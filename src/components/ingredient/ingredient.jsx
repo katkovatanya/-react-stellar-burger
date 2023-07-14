@@ -1,10 +1,10 @@
 import constructorStyle from './ingredient.module.css';
 import { ingredientPropType } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SORT_ITEMS, DEL_ITEMS } from '../../services/actions';
 
 
@@ -12,7 +12,7 @@ export function Ingredient({ ingredient, index }) {
   const ref = useRef(null);
   const dispatch = useDispatch();
 
-  
+
   const [, dropSort] = useDrop({
     accept: 'ingredientSort',
     hover(item, monitor) {

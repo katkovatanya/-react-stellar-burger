@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import ReactDOM from "react-dom";
 import modalStyle from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
@@ -8,7 +7,7 @@ import PropTypes from 'prop-types';
 const modalRoot = document.getElementById("react-modals");
 
 
-const Modal = ({closeModal, children}) => {
+const Modal = ({ closeModal, children }) => {
 
   return ReactDOM.createPortal(
     (

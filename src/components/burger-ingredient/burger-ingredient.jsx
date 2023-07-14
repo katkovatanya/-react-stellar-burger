@@ -2,11 +2,12 @@ import ingridientStyle from './burger-ingredient.module.css';
 import { Counter, CurrencyIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_CURRENT_INGREDIENT, OPEN_MODAL_INGREDIENT, ADD_KEY } from '../../services/actions';
+import { GET_CURRENT_INGREDIENT, OPEN_MODAL_INGREDIENT } from '../../services/actions';
 import { useDrag } from "react-dnd";
-import { typeBun } from '../../utils/constants';
+import { Link, useLocation } from 'react-router-dom';
 
 export const BurgerIngredient = ({ card, setModal }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [counter, setCounter] = useState(0);
   const { items, bun } = useSelector(state => state.burgerConstructor);
@@ -35,7 +36,10 @@ export const BurgerIngredient = ({ card, setModal }) => {
 
 
   return (
-    <div ref={dragRef} className={ingridientStyle.ingridient} key={card._id} onClick={() => openModal(card)}>
+    <Link
+      to={`/ingredients/${card._id}`}
+      state={{ background: location }}
+      ref={dragRef} className={ingridientStyle.ingridient} key={card._id} onClick={() => openModal(card)}>
       {counter > 0 && <Counter count={counter} size="default" extraClass="m-1" key={card._id} />}
       <img className={ingridientStyle.ingridient__img} src={card.image} alt={card.name} />
       <div>
@@ -43,6 +47,6 @@ export const BurgerIngredient = ({ card, setModal }) => {
         <CurrencyIcon type="primary" />
       </div>
       <p className="text text_type_main-default">{card.name}</p>
-    </div>
+    </Link>
   )
 }

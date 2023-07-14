@@ -25,3 +25,12 @@
   display: flex;
   column-gap: 11px;
 }
+
+.header__constructor {
+  text-decoration: none;
+  color: #fff;
+}
+
+.header__profile {
+  text-decoration: none;
+}
