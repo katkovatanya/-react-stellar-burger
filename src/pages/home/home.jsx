@@ -27,26 +27,17 @@ export function Home({ modal, setModal }) {
     }
   }
 
-  // const content = useMemo(
-  //   () => {
-  //     return ingredientsRequest ? (
-  //       <p>Waiting...</p>
-  //     ) : (
-  //       <BurgerIngredients modal={modal} setModal={setModal} />
-  //     );
-  //   },
-  //   [ingredientsRequest, data]
-  // );
+
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={styles.app}>
         {data && <main className={styles.main}>
-          ingredientsRequest ? (
-          <p>Waiting...</p>
+          {ingredientsRequest ? (
+            <p>Waiting...</p>
           ) : (
-          <BurgerIngredients modal={modal} setModal={setModal} />
-          );
+            <BurgerIngredients modal={modal} setModal={setModal} />
+          )}
           <BurgerConstructor onDropHandler={onDropHandler} />
         </main>}
       </div >

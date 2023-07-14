@@ -91,7 +91,7 @@ export const editUser = (newName, newEmail, newPassword) => {
 }
 
 export const postOrder = (burger) => {
-  return fetchWithRefresh('POST', urlOrder, { ingredients: burger })
+  return fetchWithRefresh('POST', `${PATH}/orders`, { ingredients: burger })
 }
 
 

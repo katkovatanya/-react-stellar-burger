@@ -1,5 +1,5 @@
 import { api, apiOrder, fetchWithRefresh, postOrder } from "../../utils/api";
-import { urlIngredients, urlOrder } from "../../utils/constants";
+import { PATH } from "../../utils/constants";
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -46,7 +46,7 @@ export function getIngredients() {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
-    api(urlIngredients).then(res => {
+    api(`${PATH}/ingredients`).then(res => {
       if (res && res.success) {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
