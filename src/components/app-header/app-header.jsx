@@ -1,5 +1,6 @@
 import headerStyle from './app-header.module.css';
 import { Logo, ProfileIcon, BurgerIcon, ListIcon, Typography } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 
 function AppHeader() {
   return (
@@ -8,23 +9,21 @@ function AppHeader() {
         <nav className={headerStyle.header__menu}>
           <div className={headerStyle.header__box}>
             <BurgerIcon type="primary" />
-            <a className="text text_type_main-default">
-              Конструктор
-            </a>
+            <Link to='/' className={headerStyle.header__constructor + " text text_type_main-default"}>Конструктор</Link>
           </div>
           <div className={headerStyle.header__box}>
             <ListIcon type="secondary" />
-            <a className="text text_type_main-default text_color_inactive">
+            <Link className={headerStyle.header__profile + " text text_type_main-default text_color_inactive"}>
               Лента заказов
-            </a>
+            </Link>
           </div>
         </nav>
-        <Logo />
+        <Link to='/'><Logo /></Link>
         <div className={headerStyle.header__user}>
           <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default text_color_inactive">
+          <Link to='/profile' className={headerStyle.header__profile + " text text_type_main-default text_color_inactive"}>
             Личный кабинет
-          </p>
+          </Link>
         </div>
       </header>
     </>

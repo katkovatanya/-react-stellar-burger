@@ -2,7 +2,7 @@ import overlayStyle from './modal-overlay.module.css';
 import { useEffect } from "react";
 import PropTypes from 'prop-types';
 
-const ModalOverlay = ({closeModal}) => {
+const ModalOverlay = ({ closeModal }) => {
 
 
   useEffect(() => {

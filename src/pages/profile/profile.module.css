@@ -1,0 +1,18 @@
+.form {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  width: 480px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancel {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: #4C4CFF;
+  margin-right: 28px;
+}

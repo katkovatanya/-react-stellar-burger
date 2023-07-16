@@ -4,6 +4,7 @@ import { modalOrderReducer, orderReducer } from './modal-order'
 import { modalIngredientReducer, currentIngredientReducer } from './modal-ingredient'
 import { allIngredientsReducer } from './all-ingredients'
 import { burgerConstructorReducer } from "./burger-constructor"
+import { userReducer } from "./user"
 
 export const rootReducer = combineReducers({
   modal: modalReducer,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
   allItems: allIngredientsReducer,
   currentIngredient: currentIngredientReducer,
   order: orderReducer,
-  burgerConstructor: burgerConstructorReducer
+  burgerConstructor: burgerConstructorReducer,
+  user: userReducer
 })
