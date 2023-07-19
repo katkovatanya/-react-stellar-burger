@@ -16,6 +16,8 @@ import { Layout } from "../layout/layout";
 import { getUser } from "../../utils/api";
 import { CHECK_TOKEN, GET_USER, getIngredients } from "../../services/actions";
 import { OrderPage } from "../../pages/orders/orders";
+import { FeedPage } from "../../pages/feed/feed";
+import { OrderDescription } from "../order-description/order-description";
 
 
 
@@ -52,6 +54,8 @@ function App() {
     <>
       <AppHeader />
       <Routes>
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:id" element={<OrderDescription />} />
         <Route path="" element={<Home modal={modal} setModal={setModal} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
