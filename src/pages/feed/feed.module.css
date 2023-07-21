@@ -12,7 +12,9 @@
 
 .order_list {
   width: 584px;
-  height: 90wh;
+  height: 75vh;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .order_numbers {

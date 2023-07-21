@@ -1,6 +1,6 @@
 import style from './feed.module.css';
 
-import { Order } from '../../components/order-description/order-description';
+import { Order } from '../../components/order/order';
 
 
 export const FeedPage = () => {
