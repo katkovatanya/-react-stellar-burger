@@ -135,3 +135,9 @@
   height: 56px;
   border-radius: 50%;
 }
+
+.order_name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

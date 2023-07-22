@@ -24,7 +24,7 @@ export const Order = ({order}) => {
         <p className="text text_type_digits-default">#034535</p>
         <p className="text text_type_main-small text_color_inactive">Сегодня, 16:20 i-GMT+3</p>
       </div>
-      <h3 className="text text_type_main-medium">{order.name}</h3>
+      <h3 className={style.order_name +" text text_type_main-medium"}>{order.name}</h3>
       <div className={style.box_ingredients}>
         <div className={style.ingredients}>
           {!visible && (ingredients.map(item => <OrderIngredient card={item} />))}

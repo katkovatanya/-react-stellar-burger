@@ -1,5 +1,5 @@
-export const WebsocketStatus  = {
-  CONNECTING:  'CONNECTING...',
+export const WebsocketStatus = {
+  CONNECTING: 'CONNECTING...',
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE'
 }

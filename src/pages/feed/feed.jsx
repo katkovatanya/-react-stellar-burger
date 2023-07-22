@@ -27,7 +27,7 @@ export const FeedPage = () => {
       <div className={style.box}>
         <section className={style.order_list + " custom-scroll"}>
           {
-            orders.map(order => <Order order={order} />)
+            orders && orders.map(order => <Order order={order} />)
           }
         </section>
         <section className={style.orders}>
@@ -53,11 +53,11 @@ export const FeedPage = () => {
           </div>
           <div>
             <p className="text text_type_main-medium">Выполнено за все время:</p>
-            <p className={style.shadow + " text text_type_digits-large"}>{total}</p>
+            {total && <p className={style.shadow + " text text_type_digits-large"}>{total}</p>}
           </div>
           <div>
             <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-            <p className={style.shadow + " text text_type_digits-large"}>{totalToday}</p>
+            {totalToday && <p className={style.shadow + " text text_type_digits-large"}>{totalToday}</p>}
           </div>
         </section>
       </div>
