@@ -15,9 +15,9 @@ export const Layout = () => {
   return (
     <main className={style.main}>
       <section className={style.sidebar} >
-        <NavLink className={({ isActive, isPending }) =>
+        <NavLink to='/profile' className={({ isActive, isPending }) =>
               isPending ? style.sidebar__link + " text text_type_main-medium text_color_inactive" : isActive ? style.active + " text text_type_main-medium" : style.sidebar__link + " text text_type_main-medium text_color_inactive"
-            }>Профиль</NavLink>
+            } end>Профиль</NavLink>
         <NavLink to='/profile/orders' className={({ isActive, isPending }) =>
               isPending ? style.sidebar__link + " text text_type_main-medium text_color_inactive" : isActive ? style.active + " text text_type_main-medium" : style.sidebar__link + " text text_type_main-medium text_color_inactive"
             }>История заказов</NavLink>

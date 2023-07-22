@@ -3,24 +3,40 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
-import { compose, createStore, applyMiddleware, getState } from 'redux';
+// import { compose, createStore, applyMiddleware, getState } from 'redux';
 import { rootReducer } from "./services/reducers";
-import thunk from "redux-thunk";
+// import thunk from "redux-thunk";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { configureStore } from "@reduxjs/toolkit";
+import { socketMiddleware } from "./services/middleware/socket-middleware";
+import {
+  ORDER_FEED_CONNECT,
+  ORDER_FEED_DISCONNECT,
+  ORDER_FEED_WS_CLOSE,
+  ORDER_FEED_WS_CONNECTING,
+  ORDER_FEED_WS_ERROR,
+  ORDER_FEED_WS_MESSAGE,
+  ORDER_FEED_WS_OPEN
+} from "./services/actions/order-feed";
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+const orderFeedMiddleware = socketMiddleware({
+  wsConnect: ORDER_FEED_CONNECT,
+  wsDisconnect: ORDER_FEED_DISCONNECT,
+  wsConnecting: ORDER_FEED_WS_CONNECTING,
+  onOpen: ORDER_FEED_WS_OPEN,
+  onClose: ORDER_FEED_WS_CLOSE,
+  onError: ORDER_FEED_WS_ERROR,
+  onMessage: ORDER_FEED_WS_MESSAGE
+});
 
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(orderFeedMiddleware);
+  }
+})
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
-
-// увидель в консоли состояние стейта, подписка на изменение стора
-// store.subscribe(() => {
-//   console.log(store.getState());
-// })
 
 ReactDOM.render(
   <React.StrictMode>
