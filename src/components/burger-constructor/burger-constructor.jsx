@@ -46,7 +46,7 @@ function BurgerConstructor(props) {
   const handleClickOrder = () => {
     if (user) {
       let burger = items.map(item => item._id);
-      burger.push(bun._id);
+      burger.push(bun._id, bun._id);
       dispatch(getOrder(burger))
       //так как ожидание модального окна получилось слишком длительным, я убрала асинхронную конструкцию. Пока идёт ответ сервера, пользователь видит надпись "wait"
       dispatch({ type: OPEN_MODAL_ORDER });

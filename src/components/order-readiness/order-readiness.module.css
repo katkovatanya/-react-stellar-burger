@@ -36,7 +36,8 @@
   background-color: #1C1C21;
   margin-bottom: 16px;
   row-gap: 24px;
-
+  color: #fff;
+  text-decoration: none;
 }
 
 .ingredient_image {
@@ -138,4 +139,15 @@
 
 .status {
   margin: 8px 0 0;
+}
+
+.status_done {
+  margin: 8px 0 0;
+  color: #0CC;
+}
+
+.order_name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

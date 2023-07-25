@@ -66,6 +66,7 @@ function App() {
         </Route>
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path="/feed/:id" element={<OrderDescription />} />
+        <Route path="/profile/orders/:id" element={<OrderDescription />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {background && (
@@ -75,6 +76,22 @@ function App() {
             element={
               <Modal closeModal={handleModalClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:id'
+            element={
+              <Modal closeModal={handleModalClose}>
+                <OrderDescription />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:id'
+            element={
+              <Modal closeModal={handleModalClose}>
+                <OrderDescription />
               </Modal>
             }
           />

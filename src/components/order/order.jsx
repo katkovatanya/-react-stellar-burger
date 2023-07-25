@@ -1,11 +1,12 @@
 import style from './order.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OrderIngredient } from '../order-ingredient/order-ingredient';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import React from 'react';
 
 export const Order = ({ order }) => {
+  const location = useLocation();
   const ingredients = order.ingredients;
   const data = useSelector(state => state.allItems.allIngredients);
 
@@ -28,7 +29,7 @@ export const Order = ({ order }) => {
 
 
   return (
-    <Link to={`/feed/${order._id}`} className={style.order} >
+    <Link to={`/feed/${order._id}`} state={{ background: location }} className={style.order} >
       <div className={style.order_number}>
         <p className="text text_type_digits-default">#034535</p>
         <p className="text text_type_main-small text_color_inactive">{<FormattedDate date={new Date(order.updatedAt)} />}</p>

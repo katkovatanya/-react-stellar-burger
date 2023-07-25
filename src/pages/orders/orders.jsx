@@ -1,14 +1,15 @@
 import { OrderReadiness } from "../../components/order-readiness/order-readiness";
 import style from './orders.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { connectWS, disconnectWS } from '../../services/actions/order-feed';
+import { connectWS, disconnectWS } from "../../services/actions/order-feed";
 import { useEffect } from "react";
 import { urlUserOrders } from "../../utils/constants";
 
 export const OrderPage = () => {
+  const token = localStorage.getItem("accessToken").split(' ')[1];
   const dispatch = useDispatch();
-  const { orders, total, totalToday } = useSelector(store => store.orderFeed.orders);
-  const connect = () => dispatch(connectWS(urlUserOrders));
+  const { orders } = useSelector(store => store.orderFeed.orders);
+  const connect = () => dispatch(connectWS(`${urlUserOrders}?token=${token}`));
   const disconnect = () => dispatch(disconnectWS())
 
   useEffect(() => {
@@ -18,14 +19,11 @@ export const OrderPage = () => {
     }
   }, [])
 
-
   return (<>
     <section className={style.section + " custom-scroll"}>
-      <OrderReadiness />
-      <OrderReadiness />
-      <OrderReadiness />
-      <OrderReadiness />
-      <OrderReadiness />
+      {
+        orders && orders.map(order => <OrderReadiness order={order} key={order._id} />)
+      }
     </section>
   </>
   )
