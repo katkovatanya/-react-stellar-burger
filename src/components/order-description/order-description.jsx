@@ -1,18 +1,22 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from './order-description.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientOnOrder } from "../ingredient-on-order/ingredient-on-order";
 import { useParams } from "react-router-dom";
 import React from "react";
+import { getAnyOrder } from "../../services/actions";
 
 export const OrderDescription = () => {
+  const dispatch = useDispatch();
+  const order = useSelector(store => store.anyOrder.order);
 
-  const { orders } = useSelector(store => store.orderFeed.orders);
   const { id } = useParams();
   const data = useSelector(state => state.allItems.allIngredients);
-  const order = orders.find(item => item._id === id);;
 
+  console.log(order);
+  console.log(data);
   const ingredientsInfo = order && order.ingredients.map(item => data.find(ing => item == ing._id));
+  let uniqueIngredients;
 
   const totalPrice = React.useMemo(() => {
     return (
@@ -20,18 +24,26 @@ export const OrderDescription = () => {
         return (item ? (sum + item.price) : sum)
       }, 0)
     )
-  }, [])
+  }, [ingredientsInfo])
+
+  React.useEffect(
+    () => {
+      dispatch(getAnyOrder(id))
+    },
+    []
+  );
 
 
-  const arrayWithCounters = ingredientsInfo.map((a) => {
+  const arrayWithCounters = ingredientsInfo && ingredientsInfo.map((a) => {
     const counter = ingredientsInfo.filter(item => item._id === a._id).length;
     return { ...a, counter: counter }
   })
 
-  const set = new Set(order.ingredients);
-  const uniqueId = [...set];
-  const uniqueIngredients = uniqueId.map(item => arrayWithCounters.find(ing => item == ing._id));
-
+  if (order) {
+    const set = new Set(order.ingredients);
+    const uniqueId = [...set];
+    uniqueIngredients = uniqueId.map(item => arrayWithCounters.find(ing => item == ing._id));
+  }
 
 
   return (

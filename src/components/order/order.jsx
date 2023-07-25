@@ -29,9 +29,9 @@ export const Order = ({ order }) => {
 
 
   return (
-    <Link to={`/feed/${order._id}`} state={{ background: location }} className={style.order} >
+    <Link to={`/feed/${order.number}`} state={{ background: location }} className={style.order} >
       <div className={style.order_number}>
-        <p className="text text_type_digits-default">#034535</p>
+        <p className="text text_type_digits-default">{order.number}</p>
         <p className="text text_type_main-small text_color_inactive">{<FormattedDate date={new Date(order.updatedAt)} />}</p>
       </div>
       <h3 className={style.order_name + " text text_type_main-medium"}>{order.name}</h3>

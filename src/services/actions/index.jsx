@@ -41,6 +41,10 @@ export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 export const CHECK_TOKEN = 'CHECK_TOKEN';
 export const GET_USER = 'GET_USER';
 
+export const GET_ANY_ORDER_REQUEST = 'GET_ANY_ORDER_REQUEST';
+export const GET_ANY_ORDER_SUCCESS = 'GET_ANY_ORDER_SUCCESS';
+export const GET_ANY_ORDER_FAILED = 'GET_ANY_ORDER_FAILED';
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
@@ -55,6 +59,26 @@ export function getIngredients() {
       } else {
         dispatch({
           type: GET_INGREDIENTS_FAILED
+        });
+      }
+    });
+  };
+}
+
+export function getAnyOrder(number) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_ANY_ORDER_REQUEST
+    });
+    api(`https://norma.nomoreparties.space/api/orders/${number}`).then(res => {
+      if (res && res.success) {
+        dispatch({
+          type: GET_ANY_ORDER_SUCCESS,
+          order: res.orders[0]
+        });
+      } else {
+        dispatch({
+          type: GET_ANY_ORDER_FAILED
         });
       }
     });

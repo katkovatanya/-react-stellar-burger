@@ -22,7 +22,7 @@ export const OrderPage = () => {
   return (<>
     <section className={style.section + " custom-scroll"}>
       {
-        orders && orders.map(order => <OrderReadiness order={order} key={order._id} />)
+        orders && orders.map(order => <OrderReadiness order={order} key={order.number} />)
       }
     </section>
   </>
