@@ -36,6 +36,9 @@
   background-color: #1C1C21;
   margin-bottom: 16px;
   row-gap: 24px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
 
 }
 

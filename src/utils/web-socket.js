@@ -3,11 +3,3 @@ export const WebsocketStatus = {
   ONLINE: 'ONLINE',
   OFFLINE: 'OFFLINE'
 }
-
-export const OrderFeedActionType = {
-  DATA: 'data',
-  INSERT: 'insert',
-  DELETE: 'delete',
-  UPDATE: 'update',
-  MOVE: 'move',
-}

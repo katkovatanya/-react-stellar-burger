@@ -10,7 +10,7 @@ import AppHeader from "../app-header/app-header";
 import { useEffect, useState } from "react";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route-element";
 import { Layout } from "../layout/layout";
 import { getUser } from "../../utils/api";
@@ -55,7 +55,6 @@ function App() {
       <AppHeader />
       <Routes>
         <Route path="/feed" element={<FeedPage />} />
-        <Route path="/feed/:id" element={<OrderDescription />} />
         <Route path="" element={<Home modal={modal} setModal={setModal} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
@@ -65,8 +64,8 @@ function App() {
           <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
           <Route path="/profile/orders" element={<OnlyAuth component={<OrderPage />} />} />
         </Route>
-        <Route path='/ingredients/:id'
-          element={<IngredientDetails />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path="/feed/:id" element={<OrderDescription />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {background && (
@@ -76,14 +75,6 @@ function App() {
             element={
               <Modal closeModal={handleModalClose}>
                 <IngredientDetails />
-              </Modal>
-            }
-          />
-          <Route
-            path='/feed/:id'
-            element={
-              <Modal closeModal={handleModalClose}>
-                <OrderDescription />
               </Modal>
             }
           />

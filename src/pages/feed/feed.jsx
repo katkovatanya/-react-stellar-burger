@@ -1,7 +1,6 @@
 import style from './feed.module.css';
 import { Order } from '../../components/order/order';
 import { useDispatch, useSelector } from 'react-redux';
-// import { WebsocketStatus } from '../../utils/web-socket';
 import { connectWS, disconnectWS } from '../../services/actions/order-feed';
 import { urlOrderFeed } from '../../utils/constants';
 import { useEffect } from 'react';
@@ -20,6 +19,17 @@ export const FeedPage = () => {
     }
   }, [])
 
+  const done = orders && orders.map(item => {
+    if (item.status === 'done') {
+      return item.number
+    }
+  }).slice(0, 20);
+
+  const pending = orders && orders.map(item => {
+    if (item.status === 'pending') {
+      return item.number
+    }
+  }).slice(0, 20);
 
   return (
     <main className={style.main}>
@@ -27,7 +37,7 @@ export const FeedPage = () => {
       <div className={style.box}>
         <section className={style.order_list + " custom-scroll"}>
           {
-            orders && orders.map(order => <Order order={order} />)
+            orders && orders.map(order => <Order order={order} key={order._id} />)
           }
         </section>
         <section className={style.orders}>
@@ -35,19 +45,13 @@ export const FeedPage = () => {
             <div>
               <h2 className="text text_type_main-medium">Готовы:</h2>
               <div className={style.done_orders}>
-                <p className={style.done_order + " text text_type_digits-default"}>034533</p>
-                <p className={style.done_order + " text text_type_digits-default"}>034533</p>
-                <p className={style.done_order + " text text_type_digits-default"}>034533</p>
-                <p className={style.done_order + " text text_type_digits-default"}>034533</p>
-                <p className={style.done_order + " text text_type_digits-default"}>034533</p>
+                {done && done.map((order, i) => <p key={i} className={style.done_order + " text text_type_digits-default"}>{order}</p>)}
               </div>
             </div>
             <div>
               <h2 className="text text_type_main-medium">В работе:</h2>
               <div className={style.done_orders}>
-                <p className=" text text_type_digits-default">034533</p>
-                <p className=" text text_type_digits-default">034533</p>
-                <p className=" text text_type_digits-default">034533</p>
+                {pending && pending.map((order, i) => <p key={i} className=" text text_type_digits-default">{order}</p>)}
               </div>
             </div>
           </div>
