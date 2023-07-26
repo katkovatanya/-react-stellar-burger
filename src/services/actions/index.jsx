@@ -55,13 +55,14 @@ export function getIngredients() {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           data: res.data
-        });
+        })
       } else {
         dispatch({
           type: GET_INGREDIENTS_FAILED
-        });
+        })
       }
-    });
+    })
+      .catch(err => console.log(err));
   };
 }
 
@@ -70,7 +71,7 @@ export function getAnyOrder(number) {
     dispatch({
       type: GET_ANY_ORDER_REQUEST
     });
-    api(`https://norma.nomoreparties.space/api/orders/${number}`).then(res => {
+    api(`${PATH}/orders/${number}`).then(res => {
       if (res && res.success) {
         dispatch({
           type: GET_ANY_ORDER_SUCCESS,
@@ -79,9 +80,10 @@ export function getAnyOrder(number) {
       } else {
         dispatch({
           type: GET_ANY_ORDER_FAILED
-        });
+        })
       }
-    });
+    })
+      .catch(err => console.log(err));
   };
 }
 
@@ -96,13 +98,14 @@ export function getOrder(burger) {
           dispatch({
             type: GET_ORDER_SUCCESS,
             order: res.order
-          });
+          })
         } else {
           dispatch({
             type: GET_ORDER_FAILED,
             order: res
-          });
+          })
         }
       })
+      .catch(err => console.log(err));
   };
 }

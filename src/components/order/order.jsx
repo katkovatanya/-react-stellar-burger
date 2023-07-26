@@ -27,9 +27,8 @@ export const Order = ({ order }) => {
   }
 
 
-
   return (
-    <Link to={`/feed/${order.number}`} state={{ background: location }} className={style.order} >
+    <Link key={order.number} to={`/feed/${order.number}`} state={{ background: location }} className={style.order} >
       <div className={style.order_number}>
         <p className="text text_type_digits-default">{order.number}</p>
         <p className="text text_type_main-small text_color_inactive">{<FormattedDate date={new Date(order.updatedAt)} />}</p>

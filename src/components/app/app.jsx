@@ -39,6 +39,7 @@ function App() {
           .then(res => {
             dispatch({ type: GET_USER, payload: res })
           })
+          .catch(err => console.log(err));
       }
     },
     []
@@ -49,6 +50,7 @@ function App() {
     setModal(false);
   };
 
+  console.log(background);
 
   return (
     <>

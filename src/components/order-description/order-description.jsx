@@ -13,8 +13,6 @@ export const OrderDescription = () => {
   const { id } = useParams();
   const data = useSelector(state => state.allItems.allIngredients);
 
-  console.log(order);
-  console.log(data);
   const ingredientsInfo = order && order.ingredients.map(item => data.find(ing => item == ing._id));
   let uniqueIngredients;
 

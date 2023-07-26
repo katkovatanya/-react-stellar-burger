@@ -9,7 +9,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: #E5E5E5
 }
 
 .overlay_active::after {
