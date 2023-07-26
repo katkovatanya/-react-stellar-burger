@@ -50,7 +50,6 @@ function App() {
     setModal(false);
   };
 
-  console.log(background);
 
   return (
     <>
