@@ -55,7 +55,7 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path="/feed" element={<FeedPage />} />
         <Route path="" element={<Home modal={modal} setModal={setModal} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
