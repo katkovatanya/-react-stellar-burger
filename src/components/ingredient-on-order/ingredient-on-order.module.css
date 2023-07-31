@@ -1,0 +1,35 @@
+.ingredient_image {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid #4C4CFF;
+  object-fit: cover;
+  background-color: #1C1C21;
+  margin-right: 16px;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  margin: 0 24px 0 0;
+}
+
+.numbers {
+  display: flex;
+  margin: 0;
+}

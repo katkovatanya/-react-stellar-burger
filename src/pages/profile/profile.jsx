@@ -24,6 +24,7 @@ export const ProfilePage = () => {
       .then(res => {
         dispatch({ type: CHANGE_USER_INFO, payload: res, password: newPassword })
       })
+      .catch(err => console.log(err));
   }
   const onCancel = () => {
     setNewName(user.name);

@@ -10,12 +10,14 @@ import AppHeader from "../app-header/app-header";
 import { useEffect, useState } from "react";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/protected-route-element";
 import { Layout } from "../layout/layout";
 import { getUser } from "../../utils/api";
 import { CHECK_TOKEN, GET_USER, getIngredients } from "../../services/actions";
 import { OrderPage } from "../../pages/orders/orders";
+import { FeedPage } from "../../pages/feed/feed";
+import { OrderDescription } from "../order-description/order-description";
 
 
 
@@ -37,6 +39,7 @@ function App() {
           .then(res => {
             dispatch({ type: GET_USER, payload: res })
           })
+          .catch(err => console.log(err));
       }
     },
     []
@@ -51,7 +54,8 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
+        <Route path="/feed" element={<FeedPage />} />
         <Route path="" element={<Home modal={modal} setModal={setModal} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegistrationPage />} />} />
@@ -61,8 +65,9 @@ function App() {
           <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
           <Route path="/profile/orders" element={<OnlyAuth component={<OrderPage />} />} />
         </Route>
-        <Route path='/ingredients/:id'
-          element={<IngredientDetails />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path="/feed/:id" element={<OrderDescription />} />
+        <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderDescription />} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {background && (
@@ -74,6 +79,23 @@ function App() {
                 <IngredientDetails />
               </Modal>
             }
+          />
+          <Route
+            path='/feed/:id'
+            element={
+              <Modal closeModal={handleModalClose}>
+                <OrderDescription />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:id'
+            element={<OnlyAuth component={
+              <Modal closeModal={handleModalClose}>
+                <OrderDescription />
+              </Modal>
+            }
+            />}
           />
         </Routes>
       )}

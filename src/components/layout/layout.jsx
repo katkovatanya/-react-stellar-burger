@@ -15,8 +15,12 @@ export const Layout = () => {
   return (
     <main className={style.main}>
       <section className={style.sidebar} >
-        <NavLink className={style.active + " text text_type_main-medium"}>Профиль</NavLink>
-        <NavLink to='/profile/orders' className={style.sidebar__link + " text text_type_main-medium text_color_inactive"}>История заказов</NavLink>
+        <NavLink to='/profile' className={({ isActive, isPending }) =>
+              isPending ? style.sidebar__link + " text text_type_main-medium text_color_inactive" : isActive ? style.active + " text text_type_main-medium" : style.sidebar__link + " text text_type_main-medium text_color_inactive"
+            } end>Профиль</NavLink>
+        <NavLink to='/profile/orders' className={({ isActive, isPending }) =>
+              isPending ? style.sidebar__link + " text text_type_main-medium text_color_inactive" : isActive ? style.active + " text text_type_main-medium" : style.sidebar__link + " text text_type_main-medium text_color_inactive"
+            }>История заказов</NavLink>
         <Link onClick={onLogOut} className={style.sidebar__link + " text text_type_main-medium text_color_inactive"}>Выход</Link>
         <p className={style.description + " text text_type_main-default text_color_inactive"}>В этом разделе вы можете изменить свои персональные данные</p>
       </section >

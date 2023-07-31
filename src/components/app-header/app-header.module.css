@@ -15,6 +15,7 @@
 
 .header__box {
   justify-content: center;
+  align-items: center;
   display: flex;
   column-gap: 8px;
   padding: 16px 20px;
@@ -33,4 +34,9 @@
 
 .header__profile {
   text-decoration: none;
+}
+
+.active {
+  text-decoration: none;
+  color: #fff;
 }

@@ -3,7 +3,7 @@
 }
 
 .modal_open {
-  z-index: 2;
+  z-index: 8;
   display: flex;
   width: 720px;
   height: max-content;

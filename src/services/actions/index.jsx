@@ -41,6 +41,10 @@ export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 export const CHECK_TOKEN = 'CHECK_TOKEN';
 export const GET_USER = 'GET_USER';
 
+export const GET_ANY_ORDER_REQUEST = 'GET_ANY_ORDER_REQUEST';
+export const GET_ANY_ORDER_SUCCESS = 'GET_ANY_ORDER_SUCCESS';
+export const GET_ANY_ORDER_FAILED = 'GET_ANY_ORDER_FAILED';
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
@@ -51,13 +55,35 @@ export function getIngredients() {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           data: res.data
-        });
+        })
       } else {
         dispatch({
           type: GET_INGREDIENTS_FAILED
-        });
+        })
       }
+    })
+      .catch(err => console.log(err));
+  };
+}
+
+export function getAnyOrder(number) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_ANY_ORDER_REQUEST
     });
+    api(`${PATH}/orders/${number}`).then(res => {
+      if (res && res.success) {
+        dispatch({
+          type: GET_ANY_ORDER_SUCCESS,
+          order: res.orders[0]
+        });
+      } else {
+        dispatch({
+          type: GET_ANY_ORDER_FAILED
+        })
+      }
+    })
+      .catch(err => console.log(err));
   };
 }
 
@@ -72,13 +98,14 @@ export function getOrder(burger) {
           dispatch({
             type: GET_ORDER_SUCCESS,
             order: res.order
-          });
+          })
         } else {
           dispatch({
             type: GET_ORDER_FAILED,
             order: res
-          });
+          })
         }
       })
+      .catch(err => console.log(err));
   };
 }

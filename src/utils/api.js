@@ -1,4 +1,4 @@
-import { PATH, urlOrder } from "./constants";
+import { PATH } from "./constants";
 
 export const checkResponse = (res) => {
   if (res.ok) {
