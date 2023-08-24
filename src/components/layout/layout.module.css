@@ -6,6 +6,11 @@
 
 .sidebar__link {
   text-decoration: none;
+  border: none;
+  background: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 
 .active {

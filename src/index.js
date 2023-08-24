@@ -6,37 +6,32 @@ import reportWebVitals from "./reportWebVitals";
 // import { compose, createStore, applyMiddleware, getState } from 'redux';
 import { rootReducer } from "./services/reducers";
 // import thunk from "redux-thunk";
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import { socketMiddleware } from "./services/middleware/socket-middleware";
 import {
   ORDER_FEED_CONNECT,
   ORDER_FEED_DISCONNECT,
-  ORDER_FEED_WS_CLOSE,
-  ORDER_FEED_WS_CONNECTING,
-  ORDER_FEED_WS_ERROR,
-  ORDER_FEED_WS_MESSAGE,
-  ORDER_FEED_WS_OPEN
+  OrderFeedActionTypes,
 } from "./services/actions/order-feed";
 
 const orderFeedMiddleware = socketMiddleware({
   wsConnect: ORDER_FEED_CONNECT,
   wsDisconnect: ORDER_FEED_DISCONNECT,
-  wsConnecting: ORDER_FEED_WS_CONNECTING,
-  onOpen: ORDER_FEED_WS_OPEN,
-  onClose: ORDER_FEED_WS_CLOSE,
-  onError: ORDER_FEED_WS_ERROR,
-  onMessage: ORDER_FEED_WS_MESSAGE
+  wsConnecting: OrderFeedActionTypes.ORDER_FEED_WS_CONNECTING,
+  onOpen: OrderFeedActionTypes.ORDER_FEED_WS_OPEN,
+  onClose: OrderFeedActionTypes.ORDER_FEED_WS_CLOSE,
+  onError: OrderFeedActionTypes.ORDER_FEED_WS_ERROR,
+  onMessage: OrderFeedActionTypes.ORDER_FEED_WS_MESSAGE,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(orderFeedMiddleware);
-  }
-})
-
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>

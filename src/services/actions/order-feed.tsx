@@ -1,0 +1,18 @@
+export const ORDER_FEED_CONNECT: "ORDER_FEED_CONNECT" = "ORDER_FEED_CONNECT";
+export const ORDER_FEED_DISCONNECT: "ORDER_FEED_DISCONNECT" =
+  "ORDER_FEED_DISCONNECT";
+
+export enum OrderFeedActionTypes {
+  ORDER_FEED_WS_CONNECTING = "ORDER_FEED_WS_CONNECTING",
+  ORDER_FEED_WS_CLOSE = "ORDER_FEED_WS_CLOSE",
+  ORDER_FEED_WS_OPEN = "ORDER_FEED_WS_OPEN",
+  ORDER_FEED_WS_ERROR = "ORDER_FEED_WS_ERROR",
+  ORDER_FEED_WS_MESSAGE = "ORDER_FEED_WS_MESSAGE",
+}
+
+export const connectWS = (url: string) => ({
+  type: ORDER_FEED_CONNECT,
+  payload: url,
+});
+
+export const disconnectWS = () => ({ type: ORDER_FEED_DISCONNECT });
