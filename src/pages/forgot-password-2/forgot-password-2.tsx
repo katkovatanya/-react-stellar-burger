@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FormEvent } from "react";
 import {
   Input,
   Button,
@@ -27,7 +27,7 @@ export const ResetPasswordPage = () => {
     }
   }, []);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sentNewPassword(password, key).then((res) => navigate("/login"));
   };

@@ -5,6 +5,7 @@ import { connectWS, disconnectWS } from "../../services/actions/order-feed";
 import { urlOrderFeed } from "../../utils/constants";
 import { useEffect } from "react";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { IOrderInterface } from "../../utils/ingredient-type";
 
 export const FeedPage = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export const FeedPage = () => {
   const done =
     orders &&
     orders
-      .map((item: any) => {
+      .map((item: IOrderInterface) => {
         if (item.status === "done") {
           return item.number;
         }
@@ -34,7 +35,7 @@ export const FeedPage = () => {
   const pending =
     orders &&
     orders
-      .map((item: any) => {
+      .map((item: IOrderInterface) => {
         if (item.status === "pending") {
           return item.number;
         }
@@ -47,7 +48,9 @@ export const FeedPage = () => {
       <div className={style.box}>
         <section className={style.order_list + " custom-scroll"}>
           {orders &&
-            orders.map((order: any) => <Order order={order} key={order._id} />)}
+            orders.map((order: IOrderInterface) => (
+              <Order order={order} key={order._id} />
+            ))}
         </section>
         <section className={style.orders}>
           <div className={style.order_numbers}>
@@ -55,7 +58,7 @@ export const FeedPage = () => {
               <h2 className="text text_type_main-medium">Готовы:</h2>
               <div className={style.done_orders}>
                 {done &&
-                  done.map((order: any, i: any) => (
+                  done.map((order: IOrderInterface, i: number) => (
                     <p
                       key={i}
                       className={
@@ -71,7 +74,7 @@ export const FeedPage = () => {
               <h2 className="text text_type_main-medium">В работе:</h2>
               <div className={style.done_orders}>
                 {pending &&
-                  pending.map((order: any, i: any) => (
+                  pending.map((order: IOrderInterface, i: number) => (
                     <p key={i} className=" text text_type_digits-default">
                       {order}
                     </p>

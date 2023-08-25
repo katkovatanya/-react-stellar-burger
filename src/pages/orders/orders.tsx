@@ -5,6 +5,7 @@ import { connectWS, disconnectWS } from "../../services/actions/order-feed";
 import { useEffect } from "react";
 import { urlUserOrders } from "../../utils/constants";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { IOrderInterface } from "../../utils/ingredient-type";
 
 export const OrderPage = () => {
   const token: string | undefined = localStorage.getItem('accessToken') ? localStorage.getItem("accessToken")?.split(" ")[1] : '';
@@ -24,7 +25,7 @@ export const OrderPage = () => {
     <>
       <section className={style.section + " custom-scroll"}>
         {orders &&
-          orders.map((order: any) => (
+          orders.map((order: IOrderInterface) => (
             <OrderReadiness order={order} key={order.number} />
           ))}
       </section>

@@ -3,7 +3,7 @@ import { BurgerConstructorActionTypes } from "../actions";
 
 interface IConstructorState {
   items: IIngredientInterface[];
-  bun: any;
+  bun: IIngredientInterface | null;
 }
 
 interface AddItemsAction {

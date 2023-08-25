@@ -1,12 +1,13 @@
 import { OrderFeedActionTypes } from "../actions/order-feed";
 import { WebsocketStatus } from "../../utils/web-socket";
+import { IOrderInterface } from "../../utils/ingredient-type";
 
 interface IOrderFeed {
   status: string;
-  orders: any;
+  orders: string[];
   connectingError: any;
-  total?: any;
-  totalToday?: any;
+  total?: number;
+  totalToday?: number;
 }
 
 interface OrderFeedWSConnectingAction {
@@ -35,8 +36,8 @@ const initialState: IOrderFeed = {
   status: WebsocketStatus.OFFLINE,
   orders: [],
   connectingError: "",
-  total: [],
-  totalToday: [],
+  total: 0,
+  totalToday: 0,
 };
 
 export type TOrderFeedActions =

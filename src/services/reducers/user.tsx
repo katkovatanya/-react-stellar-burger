@@ -10,7 +10,7 @@ interface IUserState {
 interface LoginAction {
   type: UserActionTypes.LOGIN;
   payload: any;
-  password: any;
+  password: string;
 }
 
 interface ReristrationNewUserAction {
@@ -25,7 +25,7 @@ interface LogoutAction {
 interface ChangeUserInfoAction {
   type: UserActionTypes.CHANGE_USER_INFO;
   payload: any;
-  password: any;
+  password: string;
 }
 
 interface CheckTokenAction {

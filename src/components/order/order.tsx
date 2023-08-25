@@ -19,16 +19,21 @@ interface IOrderProps {
 export const Order: FC<IOrderProps> = ({ order }) => {
   const location = useLocation();
   const ingredients: string[] = order.ingredients;
-  const data: IIngredientInterface[] = useTypedSelector((state) => state.allItems.allIngredients);
+  const data: IIngredientInterface[] = useTypedSelector(
+    (state) => state.allItems.allIngredients
+  );
 
-  const ingredientsInfo = ingredients.map((item: string) => {
-    return data.find((ing: IIngredientInterface) => item == ing._id);
-  });
+  const ingredientsInfo: IIngredientInterface[] | null = ingredients && ingredients.map((item: string) =>
+        data?.find((ing: IIngredientInterface) => item == ing._id)
+      )
 
   const totalPrice = React.useMemo(() => {
-    return ingredientsInfo.reduce((sum: number, item: IIngredientInterface | undefined) => {
-      return item ? sum + item.price : sum;
-    }, 0);
+    return ingredientsInfo?.reduce(
+      (sum: number, item: IIngredientInterface) => {
+        return item ? sum + item.price : sum;
+      },
+      0
+    );
   }, []);
 
   let visible;
@@ -58,14 +63,14 @@ export const Order: FC<IOrderProps> = ({ order }) => {
       <div className={style.box_ingredients}>
         <div className={style.ingredients}>
           {!visible &&
-            ingredientsInfo.map((item: any, i: any) => (
+            ingredientsInfo?.map((item: IIngredientInterface, i: number) => (
               <OrderIngredient key={i} card={item} />
             ))}
           {visible &&
-            visible.map((item: any, i: any) => (
+            visible.map((item: IIngredientInterface, i: number) => (
               <OrderIngredient key={i} card={item} />
             ))}
-          {visible && (
+          {ingredientsInfo.length > 6 && (
             <div className={style.hidden_elements}>
               <OrderIngredient key={5} card={ingredientsInfo[5]} />
               <p className={style.layer + " text text_type_main-default"}>

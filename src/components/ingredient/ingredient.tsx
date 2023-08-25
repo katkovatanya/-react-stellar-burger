@@ -15,13 +15,20 @@ interface IIngredientProps {
   index: number;
 }
 
+export type DragObject = {
+  name: string;
+  type: string;
+  index: number
+}
+
+
 export const Ingredient: FC<IIngredientProps> = ({ ingredient, index }) => {
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
   const [, dropSort] = useDrop({
     accept: "ingredientSort",
-    hover(item: { id: string; index: number }, monitor: any) {
+    hover(item: DragObject , monitor: any) {
       console.log(monitor)
       //dragIndex - what comes from Drag: index of the dragging item (46 line)
       const dragIndex = item.index;

@@ -7,9 +7,10 @@ import {
 import React, { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { IIngredientInterface, IOrderInterface } from "../../utils/ingredient-type";
 
 interface IOrderReadiness {
-  order: any;
+  order: IOrderInterface;
 }
 
 export const OrderReadiness: FC<IOrderReadiness> = ({ order }) => {
@@ -18,12 +19,12 @@ export const OrderReadiness: FC<IOrderReadiness> = ({ order }) => {
   const ingredients = order.ingredients;
   const data = useTypedSelector((state) => state.allItems.allIngredients);
 
-  const ingredientsInfo = ingredients.map((item: any) =>
+  const ingredientsInfo = ingredients.map((item: string) =>
     data.find((ing) => item == ing._id)
   );
 
   const totalPrice = React.useMemo(() => {
-    return ingredientsInfo.reduce((sum: number, item: any) => {
+    return ingredientsInfo.reduce((sum: number, item: IIngredientInterface) => {
       return item ? sum + item.price : sum;
     }, 0);
   }, []);
@@ -69,11 +70,11 @@ export const OrderReadiness: FC<IOrderReadiness> = ({ order }) => {
       <div className={style.box_ingredients}>
         <div className={style.ingredients}>
           {!visible &&
-            ingredientsInfo.map((item: any, index: any) => (
+            ingredientsInfo.map((item: IIngredientInterface, index: number) => (
               <OrderIngredient key={index} card={item} />
             ))}
           {visible &&
-            visible.map((item: any, index: any) => (
+            visible.map((item: IIngredientInterface, index: number) => (
               <OrderIngredient key={index} card={item} />
             ))}
           {visible && (

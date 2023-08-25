@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC, FormEvent} from "react";
 import {
   Input,
   Button,
@@ -7,7 +7,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import style from "./forgot-password-1.module.css";
 import { resetPassword } from "../../utils/api";
 
-export const ForgotPasswordFirstPage = () => {
+export const ForgotPasswordFirstPage: FC = () => {
   const [email, setEmail] = React.useState("");
 
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const ForgotPasswordFirstPage = () => {
 
   localStorage.setItem("path", location.pathname);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     resetPassword(email).then((res) => {
       navigate("/reset-password");

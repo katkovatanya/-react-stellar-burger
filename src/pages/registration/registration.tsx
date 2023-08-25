@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, FormEvent } from "react";
 import {
   Input,
   Button,
@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 import style from "./registration.module.css";
 import { createNewUser } from "../../utils/api";
 
-export const RegistrationPage = () => {
+export const RegistrationPage: FC = () => {
   const [name, setName] = React.useState("");
 
   const [email, setEmail] = React.useState("");
 
   const [password, setPassword] = React.useState("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createNewUser(email, password, name);
   };
