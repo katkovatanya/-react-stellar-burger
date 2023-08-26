@@ -7,7 +7,10 @@ import {
 import React, { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { IIngredientInterface, IOrderInterface } from "../../utils/ingredient-type";
+import {
+  IIngredientInterface,
+  IOrderInterface,
+} from "../../utils/ingredient-type";
 
 interface IOrderReadiness {
   order: IOrderInterface;
@@ -24,7 +27,7 @@ export const OrderReadiness: FC<IOrderReadiness> = ({ order }) => {
   );
 
   const totalPrice = React.useMemo(() => {
-    return ingredientsInfo.reduce((sum: number, item: IIngredientInterface) => {
+    return ingredientsInfo.reduce((sum: number, item) => {
       return item ? sum + item.price : sum;
     }, 0);
   }, []);
@@ -70,13 +73,16 @@ export const OrderReadiness: FC<IOrderReadiness> = ({ order }) => {
       <div className={style.box_ingredients}>
         <div className={style.ingredients}>
           {!visible &&
-            ingredientsInfo.map((item: IIngredientInterface, index: number) => (
-              <OrderIngredient key={index} card={item} />
-            ))}
+            ingredientsInfo &&
+            ingredientsInfo.map(
+              (item, index: number) =>
+                item && <OrderIngredient key={index} card={item} />
+            )}
           {visible &&
-            visible.map((item: IIngredientInterface, index: number) => (
-              <OrderIngredient key={index} card={item} />
-            ))}
+            visible.map(
+              (item, index: number) =>
+                item && <OrderIngredient key={index} card={item} />
+            )}
           {visible && (
             <div className={style.hidden_elements}>
               <OrderIngredient key={5} card={ingredientsInfo[5]} />

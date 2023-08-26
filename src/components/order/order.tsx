@@ -23,9 +23,15 @@ export const Order: FC<IOrderProps> = ({ order }) => {
     (state) => state.allItems.allIngredients
   );
 
-  const ingredientsInfo: IIngredientInterface[] | null = ingredients && ingredients.map((item: string) =>
-        data?.find((ing: IIngredientInterface) => item == ing._id)
-      )
+  const ingredientsInfo: IIngredientInterface[] = [];
+  ingredients.forEach((element) => {
+    const findedEl = data?.find(
+      (ing: IIngredientInterface) => element === ing._id
+    );
+    if (findedEl) {
+      ingredientsInfo.push(findedEl);
+    }
+  });
 
   const totalPrice = React.useMemo(() => {
     return ingredientsInfo?.reduce(

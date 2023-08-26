@@ -32,7 +32,7 @@ function BurgerConstructor(props: {
   const dispatch = useDispatch();
 
   const { items, bun } = useTypedSelector((state) => state.burgerConstructor);
-  const modalOrder = useTypedSelector(state => state.modalOrder.modalOrder)
+  const modalOrder = useTypedSelector((state) => state.modalOrder.modalOrder);
   const [orderModal, setOrderModal] = React.useState(false);
 
   const totalPrice = React.useMemo(() => {
@@ -48,7 +48,7 @@ function BurgerConstructor(props: {
   const handleClickOrder = () => {
     if (user) {
       let burger = items.map((item) => item._id);
-      burger.push(bun._id, bun._id);
+      bun && burger.push(bun._id, bun._id);
       dispatch(getOrder(burger));
       //так как ожидание модального окна получилось слишком длительным, я убрала асинхронную конструкцию. Пока идёт ответ сервера, пользователь видит надпись "wait"
       dispatch({ type: ModalOrderActionTypes.OPEN_MODAL_ORDER });

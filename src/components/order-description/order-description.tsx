@@ -36,14 +36,12 @@ export const OrderDescription = () => {
     id && dispatch(getAnyOrder(id));
   }, []);
 
-  const arrayWithCounters: any = ingredientsInfo?.map(
-    (a) => {
-      const counter = ingredientsInfo.filter(
-        (item) => item?._id === a?._id
-      ).length;
-      return { ...a, counter: counter };
-    }
-  );
+  const arrayWithCounters: any = ingredientsInfo?.map((a) => {
+    const counter = ingredientsInfo.filter(
+      (item) => item?._id === a?._id
+    ).length;
+    return { ...a, counter: counter };
+  });
 
   const removeDuplicates = () => {
     if (order) {
@@ -85,10 +83,10 @@ export const OrderDescription = () => {
       </p>
       <div className={style.ingredients + " custom-scroll"}>
         {order &&
-          uniqueIngredients?.map(
-            (item: IIngredientInterface, index: number) => (
-              <IngredientOnOrder key={index} card={item} />
-            )
+          uniqueIngredients &&
+          uniqueIngredients.map(
+            (item, index: number) =>
+              item && <IngredientOnOrder key={index} card={item} />
           )}
       </div>
       <div className={style.total}>
