@@ -1,18 +1,24 @@
 import { OrderReadiness } from "../../components/order-readiness/order-readiness";
 import style from "./orders.module.css";
 import { useDispatch } from "react-redux";
-import { connectWS, disconnectWS } from "../../services/actions/order-feed";
+import {
+  connectUserWS,
+  disconnectUserWS,
+} from "../../services/actions/order-feed";
 import { useEffect } from "react";
 import { urlUserOrders } from "../../utils/constants";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { IOrderInterface } from "../../utils/ingredient-type";
 
 export const OrderPage = () => {
-  const token: string | undefined = localStorage.getItem('accessToken') ? localStorage.getItem("accessToken")?.split(" ")[1] : '';
+  const token: string | undefined = localStorage.getItem("accessToken")
+    ? localStorage.getItem("accessToken")?.split(" ")[1]
+    : "";
   const dispatch = useDispatch();
-  const { orders } = useTypedSelector((store) => store.orderFeed.orders);
-  const connect = () => dispatch(connectWS(`${urlUserOrders}?token=${token}`));
-  const disconnect = () => dispatch(disconnectWS());
+  const orders = useTypedSelector((store) => store.userOrderFeed.orders);
+  const connect = () =>
+    dispatch(connectUserWS(`${urlUserOrders}?token=${token}`));
+  const disconnect = () => dispatch(disconnectUserWS());
 
   useEffect(() => {
     connect();

@@ -10,7 +10,7 @@ import { IOrderInterface } from "../../utils/ingredient-type";
 export const FeedPage = () => {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useTypedSelector(
-    (store) => store.orderFeed.orders
+    (store) => store.orderFeed
   );
   const connect = () => dispatch(connectWS(urlOrderFeed));
   const disconnect = () => dispatch(disconnectWS());
@@ -22,15 +22,13 @@ export const FeedPage = () => {
     };
   }, []);
 
-  const done =
-    orders &&
-    orders
-      .map((item: IOrderInterface) => {
-        if (item.status === "done") {
-          return item.number;
-        }
-      })
-      .slice(0, 20);
+  const done: number[] = [];
+  orders &&
+    orders.forEach((item) => {
+      if (item.status === "done") {
+        done.push(item.number);
+      }
+    });
 
   const pending =
     orders &&
@@ -58,7 +56,7 @@ export const FeedPage = () => {
               <h2 className="text text_type_main-medium">Готовы:</h2>
               <div className={style.done_orders}>
                 {done &&
-                  done.map((order: IOrderInterface, i: number) => (
+                  done.slice(0, 20).map((order, i: number) => (
                     <p
                       key={i}
                       className={
@@ -74,7 +72,7 @@ export const FeedPage = () => {
               <h2 className="text text_type_main-medium">В работе:</h2>
               <div className={style.done_orders}>
                 {pending &&
-                  pending.map((order: IOrderInterface, i: number) => (
+                  pending.map((order, i: number) => (
                     <p key={i} className=" text text_type_digits-default">
                       {order}
                     </p>

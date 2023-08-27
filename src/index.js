@@ -11,14 +11,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import { socketMiddleware } from "./services/middleware/socket-middleware";
 import {
-  ORDER_FEED_CONNECT,
-  ORDER_FEED_DISCONNECT,
-  OrderFeedActionTypes,
+  OrderFeedActionTypes, UserOrderFeedActionTypes,
 } from "./services/actions/order-feed";
 
 const orderFeedMiddleware = socketMiddleware({
-  wsConnect: ORDER_FEED_CONNECT,
-  wsDisconnect: ORDER_FEED_DISCONNECT,
+  wsConnect: OrderFeedActionTypes.ORDER_FEED_CONNECT,
+  wsDisconnect: OrderFeedActionTypes.ORDER_FEED_DISCONNECT,
   wsConnecting: OrderFeedActionTypes.ORDER_FEED_WS_CONNECTING,
   onOpen: OrderFeedActionTypes.ORDER_FEED_WS_OPEN,
   onClose: OrderFeedActionTypes.ORDER_FEED_WS_CLOSE,
@@ -26,10 +24,20 @@ const orderFeedMiddleware = socketMiddleware({
   onMessage: OrderFeedActionTypes.ORDER_FEED_WS_MESSAGE,
 });
 
+const userOrderFeedMiddleware = socketMiddleware({
+  wsConnect: UserOrderFeedActionTypes.USER_ORDER_FEED_CONNECT,
+  wsDisconnect: UserOrderFeedActionTypes.USER_ORDER_FEED_DISCONNECT,
+  wsConnecting: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_CONNECTING,
+  onOpen: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_OPEN,
+  onClose: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_CLOSE,
+  onError: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_ERROR,
+  onMessage: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_MESSAGE,
+});
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(orderFeedMiddleware);
+    return getDefaultMiddleware().concat(orderFeedMiddleware, userOrderFeedMiddleware);
   },
 });
 
@@ -44,7 +52,5 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
 reportWebVitals();

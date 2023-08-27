@@ -83,7 +83,7 @@ export const OrderReadiness: FC<IOrderReadiness> = ({ order }) => {
               (item, index: number) =>
                 item && <OrderIngredient key={index} card={item} />
             )}
-          {visible && (
+          {visible && ingredientsInfo[5] && (
             <div className={style.hidden_elements}>
               <OrderIngredient key={5} card={ingredientsInfo[5]} />
               <p className={style.layer + " text text_type_main-default"}>

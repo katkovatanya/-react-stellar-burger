@@ -1,13 +1,22 @@
 import { OrderFeedActionTypes } from "../actions/order-feed";
 import { WebsocketStatus } from "../../utils/web-socket";
-import { IOrderInterface } from "../../utils/ingredient-type";
+import { IOrderFeedAnswer, IOrderInterface } from "../../utils/ingredient-type";
 
 interface IOrderFeed {
   status: string;
-  orders: string[];
+  orders: IOrderInterface[];
   connectingError: any;
   total?: number;
   totalToday?: number;
+}
+
+interface OrderFeedWSDisconnectAction {
+  type: OrderFeedActionTypes.ORDER_FEED_DISCONNECT;
+}
+
+interface OrderFeedWSConnectAction {
+  type: OrderFeedActionTypes.ORDER_FEED_CONNECT;
+  payload: "string";
 }
 
 interface OrderFeedWSConnectingAction {
@@ -45,7 +54,9 @@ export type TOrderFeedActions =
   | OrderFeedWSCloseAction
   | OrderFeedWSOpenAction
   | OrderFeedWSErrorAction
-  | OrderFeedWSMessageAction;
+  | OrderFeedWSMessageAction
+  | OrderFeedWSConnectAction
+  | OrderFeedWSDisconnectAction;
 
 export const orderFeedReducer = (
   state = initialState,
@@ -76,7 +87,9 @@ export const orderFeedReducer = (
     case OrderFeedActionTypes.ORDER_FEED_WS_MESSAGE:
       return {
         ...state,
-        orders: action.payload,
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     default:
       return state;

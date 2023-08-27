@@ -1,14 +1,15 @@
-import { combineReducers } from "redux"
-import { modalReducer } from './modal'
-import { orderReducer } from './modal-order'
-import { currentIngredientReducer } from './modal-ingredient'
-import { allIngredientsReducer } from './all-ingredients'
-import { burgerConstructorReducer } from "./burger-constructor"
-import { userReducer } from "./user"
-import { orderFeedReducer } from "./order-feed"
-import { anyOrderReducer } from "./any-order"
-import { modalIngredientReducer } from "./modal-ingredient"
-import { modalOrderReducer } from "./modal-order"
+import { combineReducers } from "redux";
+import { modalReducer } from "./modal";
+import { orderReducer } from "./modal-order";
+import { currentIngredientReducer } from "./modal-ingredient";
+import { allIngredientsReducer } from "./all-ingredients";
+import { burgerConstructorReducer } from "./burger-constructor";
+import { userReducer } from "./user";
+import { orderFeedReducer } from "./order-feed";
+import { userOrderFeedReducer } from "./user-order-feed";
+import { anyOrderReducer } from "./any-order";
+import { modalIngredientReducer } from "./modal-ingredient";
+import { modalOrderReducer } from "./modal-order";
 
 export const rootReducer = combineReducers({
   modal: modalReducer,
@@ -20,7 +21,8 @@ export const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
   user: userReducer,
   orderFeed: orderFeedReducer,
-  anyOrder: anyOrderReducer
-})
+  userOrderFeed: userOrderFeedReducer,
+  anyOrder: anyOrderReducer,
+});
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

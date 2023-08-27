@@ -26,3 +26,10 @@ export interface IOrderInterface {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IOrderFeedAnswer {
+  success: boolean;
+  orders: IOrderInterface;
+  total: number;
+  totalToday: number;
+}
