@@ -29,7 +29,7 @@ export interface IOrderInterface {
 
 export interface IOrderFeedAnswer {
   success: boolean;
-  orders: IOrderInterface;
+  orders: IOrderInterface[];
   total: number;
   totalToday: number;
 }

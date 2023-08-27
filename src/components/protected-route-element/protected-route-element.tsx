@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { FC } from "react";
+import { FC, ReactComponentElement } from "react";
 
 interface IProtectedRouteElementProps {
   onlyUnAuth?: boolean;

@@ -13,7 +13,7 @@ import { IIngredientInterface } from "../../utils/ingredient-type";
 
 interface IHomeProps {
   modal: boolean;
-  setModal: any;
+  setModal: (arg: boolean) => void;
 }
 
 export const Home:FC<IHomeProps> = ({ modal, setModal }) => {

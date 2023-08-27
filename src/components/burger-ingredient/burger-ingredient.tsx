@@ -5,9 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  ModalIngredientActionTypes
-} from "../../services/actions";
+import { ModalIngredientActionTypes } from "../../services/actions";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -15,10 +13,13 @@ import { IIngredientInterface } from "../../utils/ingredient-type";
 
 interface IBurgerIngredientProps {
   card: IIngredientInterface;
-  setModal: any;
+  setModal: (arg: boolean) => void;
 }
 
-export const BurgerIngredient: React.FC<IBurgerIngredientProps> = ({ card, setModal }) => {
+export const BurgerIngredient: React.FC<IBurgerIngredientProps> = ({
+  card,
+  setModal,
+}) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [counter, setCounter] = useState(0);
@@ -43,7 +44,10 @@ export const BurgerIngredient: React.FC<IBurgerIngredientProps> = ({ card, setMo
   });
 
   const openModal = (item: IIngredientInterface) => {
-    dispatch({ type: ModalIngredientActionTypes.GET_CURRENT_INGREDIENT, ingredient: item });
+    dispatch({
+      type: ModalIngredientActionTypes.GET_CURRENT_INGREDIENT,
+      ingredient: item,
+    });
     dispatch({ type: ModalIngredientActionTypes.OPEN_MODAL_INGREDIENT });
     setModal(true);
   };

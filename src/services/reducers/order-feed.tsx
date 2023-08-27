@@ -5,7 +5,7 @@ import { IOrderFeedAnswer, IOrderInterface } from "../../utils/ingredient-type";
 interface IOrderFeed {
   status: string;
   orders: IOrderInterface[];
-  connectingError: any;
+  connectingError: string;
   total?: number;
   totalToday?: number;
 }
@@ -33,12 +33,12 @@ interface OrderFeedWSOpenAction {
 
 interface OrderFeedWSErrorAction {
   type: OrderFeedActionTypes.ORDER_FEED_WS_ERROR;
-  payload: any;
+  payload: string;
 }
 
 interface OrderFeedWSMessageAction {
   type: OrderFeedActionTypes.ORDER_FEED_WS_MESSAGE;
-  payload: any;
+  payload: IOrderFeedAnswer;
 }
 
 const initialState: IOrderFeed = {
