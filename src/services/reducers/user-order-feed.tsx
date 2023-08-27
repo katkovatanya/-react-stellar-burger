@@ -1,11 +1,11 @@
 import { UserOrderFeedActionTypes } from "../actions/order-feed";
 import { WebsocketStatus } from "../../utils/web-socket";
-import { IOrderInterface } from "../../utils/ingredient-type";
+import { IOrderFeedAnswer, IOrderInterface } from "../../utils/ingredient-type";
 
 interface IOrderFeed {
   status: string;
   orders: IOrderInterface[];
-  connectingError: any;
+  connectingError: string;
 }
 
 interface UserOrderFeedWSDisconnectAction {
@@ -31,12 +31,12 @@ interface UserOrderFeedWSOpenAction {
 
 interface UserOrderFeedWSErrorAction {
   type: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_ERROR;
-  payload: any;
+  payload: string;
 }
 
 interface UserOrderFeedWSMessageAction {
   type: UserOrderFeedActionTypes.USER_ORDER_FEED_WS_MESSAGE;
-  payload: any;
+  payload: IOrderFeedAnswer;
 }
 
 const initialState: IOrderFeed = {

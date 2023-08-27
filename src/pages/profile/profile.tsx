@@ -15,14 +15,14 @@ export const ProfilePage = () => {
   const user = useTypedSelector((state) => state.user.user);
   const password = useTypedSelector((state) => state.user.password);
 
-  const [newName, setNewName] = useState(user.name);
-  const [newEmail, setNewEmail] = useState(user.email);
+  const [newName, setNewName] = useState(user?.name);
+  const [newEmail, setNewEmail] = useState(user?.email);
   const [newPassword, setNewPassword] = useState(password);
   const [change, setChange] = useState(false);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    editUser(newName, newEmail, newPassword)
+    editUser(newName!, newEmail!, newPassword)
       .then((res) => {
         dispatch({
           type: UserActionTypes.CHANGE_USER_INFO,
@@ -33,9 +33,9 @@ export const ProfilePage = () => {
       .catch((err) => console.log(err));
   };
   const onCancel = () => {
-    setNewName(user.name);
-    setNewEmail(user.email);
-    setNewPassword(user.password);
+    setNewName(user?.name);
+    setNewEmail(user?.email);
+    setNewPassword("");
     setChange(false);
   };
 
@@ -51,7 +51,7 @@ export const ProfilePage = () => {
           }}
           icon={"EditIcon"}
           name={"name"}
-          value={newName}
+          value={newName ? newName : ""}
           error={false}
           errorText={"Ошибка"}
           size={"default"}
@@ -65,7 +65,7 @@ export const ProfilePage = () => {
           }}
           icon={"EditIcon"}
           name={"email"}
-          value={newEmail}
+          value={newEmail ? newEmail : ""}
           error={false}
           errorText={"Ошибка"}
           size={"default"}

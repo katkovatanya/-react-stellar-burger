@@ -3,19 +3,29 @@ import { UserActionTypes } from "../actions";
 interface IUserState {
   isAuthChecked: boolean;
   isAuthenticated: boolean;
-  user: any;
+  user: { email: string; name: string } | null;
   password: string;
 }
 
 interface LoginAction {
   type: UserActionTypes.LOGIN;
-  payload: any;
+  payload: {
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+    user: { email: string; name: string };
+  };
   password: string;
 }
 
 interface ReristrationNewUserAction {
   type: UserActionTypes.REGISTRATION_NEW_USER;
-  payload: any;
+  payload: {
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+    user: { email: string; name: string };
+  };
 }
 
 interface LogoutAction {
@@ -24,7 +34,12 @@ interface LogoutAction {
 
 interface ChangeUserInfoAction {
   type: UserActionTypes.CHANGE_USER_INFO;
-  payload: any;
+  payload: {
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+    user: { email: string; name: string };
+  };
   password: string;
 }
 
@@ -34,7 +49,12 @@ interface CheckTokenAction {
 
 interface GetUserAction {
   type: UserActionTypes.GET_USER;
-  payload: any;
+  payload: {
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+    user: { email: string; name: string };
+  };
 }
 
 export type TUserActions =
