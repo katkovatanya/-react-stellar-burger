@@ -77,8 +77,7 @@ export const Ingredient: FC<IIngredientProps> = ({ ingredient, index }) => {
   const opacity = isDragging ? 0 : 1;
   dragSort(dropSort(ref));
 
-  const handleClose = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleClose = () => {
     dispatch({
       type: BurgerConstructorActionTypes.DEL_ITEMS,
       id: ingredient.constructorId,
@@ -97,7 +96,7 @@ export const Ingredient: FC<IIngredientProps> = ({ ingredient, index }) => {
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={(e: React.MouseEvent) => handleClose(e)}
+        handleClose={() => handleClose()}
       />
     </div>
   );
