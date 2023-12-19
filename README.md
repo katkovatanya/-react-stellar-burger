@@ -17,14 +17,14 @@
 ##Как запустить проект:
 Клонировать репозиторий и перейти в него:
 
-git clone git@github.com:katkovatanya/-react-stellar-burger.git
+`git clone git@github.com:katkovatanya/-react-stellar-burger.git`
 
-cd -react-stellar-burger
+`cd -react-stellar-burger`
 Установить зависимости
 
-npm i
+`npm i`
 Запустить проект
 
-npm start
+`npm start`
 
 
