@@ -18,13 +18,15 @@
 Клонировать репозиторий и перейти в него:
 
 `git clone git@github.com:katkovatanya/-react-stellar-burger.git`
-
+<br>
 `cd -react-stellar-burger`
+<br>
 Установить зависимости
-
+<br>
 `npm i`
+<br>
 Запустить проект
-
+<br>
 `npm start`
 
 
