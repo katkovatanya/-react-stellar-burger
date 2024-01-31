@@ -14,20 +14,6 @@
 Перетаскивание ингредиентов Drag-and-drop.
 Есть возможность отследить общую ленту заказов и историю своих заказов, а также их статус (реализовано через WebSocket).
 
-## Как запустить проект:
-Клонировать репозиторий и перейти в него:
-<br><br>
-
-`git clone git@github.com:katkovatanya/-react-stellar-burger.git`
-<br><br>
-`cd -react-stellar-burger`
-<br><br>
-Установить зависимости
-<br><br>
-`npm i`
-<br><br>
-Запустить проект
-<br><br>
-`npm start`
 
 
+[сайт доступен по ссылке](http://katkovatanya.github.io/-react-stellar-burger)
